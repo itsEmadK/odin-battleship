@@ -27,6 +27,10 @@ class Ship {
     hit() {
         this.#hits += 1;
     }
+
+    isSunk() {
+        return this.#hits >= this.length;
+    }
 }
 
 export { Ship };

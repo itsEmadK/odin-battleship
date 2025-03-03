@@ -32,3 +32,28 @@ describe('hit() method', () => {
         expect(newHits).toBe(oldHits + 1);
     });
 });
+
+describe('isSunk() method', () => {
+    test('exists', () => {
+        const ship = new Ship(5);
+        expect(ship.isSunk).toBeDefined();
+    });
+    test('returns true when length = hits', () => {
+        const ship = new Ship(2);
+        ship.hit();
+        ship.hit();
+        expect(ship.isSunk()).toBe(true);
+    });
+    test('returns true when length > hits', () => {
+        const ship = new Ship(1);
+        ship.hit();
+        ship.hit();
+        expect(ship.isSunk()).toBe(true);
+    });
+    test('returns false when length < hits', () => {
+        const ship = new Ship(3);
+        ship.hit();
+        ship.hit();
+        expect(ship.isSunk()).toBe(false);
+    });
+});
