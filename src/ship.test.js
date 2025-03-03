@@ -19,3 +19,16 @@ describe('"hits" getter', () => {
         }).toThrow(Error);
     });
 });
+
+describe('hit() method', () => {
+    const ship = new Ship(5);
+    test('exists', () => {
+        expect(ship.hit).toBeDefined();
+    });
+    test('Increases the number of hits on invocation', () => {
+        const oldHits = ship.hits;
+        ship.hit();
+        const newHits = ship.hits;
+        expect(newHits).toBe(oldHits + 1);
+    });
+});
