@@ -5,6 +5,18 @@ class Ship {
     length;
 
     /**
+     * @type {number}
+     */
+    #hits = 0;
+
+    /**
+     * @type {number}
+     */
+    get hits() {
+        return this.#hits;
+    }
+
+    /**
      *
      * @param {number} length
      */
