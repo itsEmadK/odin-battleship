@@ -315,3 +315,49 @@ describe('receiveAttack method', () => {
         expect(mockedHit).toBeCalledTimes(1);
     });
 });
+
+describe('areAllShipsSunk method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.areAllShipsSunk).toBeDefined();
+    });
+    test('returns true if all of the ships are sunk', () => {
+        const gb = new GameBoard();
+        const ship1 = new Ship(1);
+        const ship2 = new Ship(2);
+        const ship3 = new Ship(3);
+        gb.placeShipHorizontally(ship1, 0, 0);
+        gb.placeShipHorizontally(ship2, 0, 1);
+        gb.placeShipVertically(ship3, 2, 2);
+
+        gb.receiveAttack(0, 0);
+
+        gb.receiveAttack(0, 1);
+        gb.receiveAttack(1, 1);
+
+        gb.receiveAttack(2, 2);
+        gb.receiveAttack(2, 3);
+        gb.receiveAttack(2, 4);
+
+        expect(gb.areAllShipsSunk()).toBe(true);
+    });
+    test('returns false if not all of the ships are sunk', () => {
+        const gb = new GameBoard();
+        const ship1 = new Ship(1);
+        const ship2 = new Ship(2);
+        const ship3 = new Ship(3);
+        gb.placeShipHorizontally(ship1, 0, 0);
+        gb.placeShipHorizontally(ship2, 0, 1);
+        gb.placeShipVertically(ship3, 2, 2);
+
+        gb.receiveAttack(0, 0);
+
+        gb.receiveAttack(0, 1);
+        gb.receiveAttack(1, 1);
+
+        gb.receiveAttack(2, 2);
+        gb.receiveAttack(2, 4);
+
+        expect(gb.areAllShipsSunk()).toBe(false);
+    });
+});

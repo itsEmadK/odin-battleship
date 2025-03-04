@@ -63,6 +63,31 @@ class GameBoard {
             }
         }
     }
+
+    #getAllShips() {
+        const ships = [];
+        for (let i = 0; i < this.gridSize; i++) {
+            for (let j = 0; j < this.gridSize; j++) {
+                const { ship } = this.board[i][j];
+                if (ship !== null) {
+                    if (!ships.includes(ship)) {
+                        ships.push(ship);
+                    }
+                }
+            }
+        }
+        return ships;
+    }
+
+    areAllShipsSunk() {
+        const ships = this.#getAllShips();
+        for (let i = 0; i < ships.length; i++) {
+            if (!ships[i].isSunk()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 export { GameBoard };
