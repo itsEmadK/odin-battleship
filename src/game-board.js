@@ -32,6 +32,25 @@ class GameBoard {
         }
         return true;
     }
+
+    placeShipVertically(ship, x, y) {
+        if (x >= this.gridSize || y >= this.gridSize) {
+            throw new Error('coordinate should be inside the board');
+        }
+        if (x >= this.gridSize || y + ship.length >= this.gridSize) {
+            throw new Error('ship is too large for the board');
+        }
+        for (let i = 0; i < ship.length; i++) {
+            if (this.board[y + i][x].ship !== null) {
+                return false;
+            }
+        }
+
+        for (let i = 0; i < ship.length; i++) {
+            this.board[y + i][x].ship = ship;
+        }
+        return true;
+    }
 }
 
 export { GameBoard };
