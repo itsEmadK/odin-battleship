@@ -51,6 +51,18 @@ class GameBoard {
         }
         return true;
     }
+
+    receiveAttack(x, y) {
+        if (x >= this.gridSize || y >= this.gridSize) {
+            throw new Error('coordinate should be inside the board');
+        }
+        if (!this.board[y][x].attacked) {
+            this.board[y][x].attacked = true;
+            if (this.board[y][x].ship !== null) {
+                this.board[y][x].ship.hit();
+            }
+        }
+    }
 }
 
 export { GameBoard };

@@ -234,3 +234,84 @@ describe('placeShipVertically Method', () => {
         expect(gb.placeShipVertically(ship2, 0, 2)).toBe(false);
     });
 });
+
+describe('receiveAttack method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.receiveAttack).toBeDefined();
+    });
+    test('calls the "hit" method of the ship in the attacked cell(0,2)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(3);
+        const x = 0;
+        const y = 0;
+        gb.placeShipVertically(ship, x, y);
+        const mockedHit = jest.fn();
+        gb.board[y][x].ship.hit = mockedHit;
+        gb.receiveAttack(x, y + 2);
+        expect(mockedHit).toBeCalledTimes(1);
+    });
+    test('calls the "hit" method of the ship in the attacked cell(3,0)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 0;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        const mockedHit = jest.fn();
+        gb.board[y][x].ship.hit = mockedHit;
+        gb.receiveAttack(3, 0);
+        expect(mockedHit).toBeCalledTimes(1);
+    });
+    test('does NOT call the "hit" method if there is no ship in the attacked cell', () => {
+        const gb = new GameBoard();
+        expect(() => {
+            gb.receiveAttack(3, 5);
+        }).not.toThrow();
+    });
+    test('sets the "attacked" prop of the attacked cell(0, 3) to true', () => {
+        const gb = new GameBoard();
+        const x = 0;
+        const y = 3;
+        gb.receiveAttack(x, y);
+        expect(gb.board[y][x].attacked).toBe(true);
+    });
+    test('sets the "attacked" prop of the attacked cell(3, 3) to true', () => {
+        const gb = new GameBoard();
+        const x = 3;
+        const y = 3;
+        gb.receiveAttack(x, y);
+        expect(gb.board[y][x].attacked).toBe(true);
+    });
+    test('throws error if attack is placed outside the board(cell:(10,10))', () => {
+        const gb = new GameBoard();
+        expect(() => {
+            gb.receiveAttack(10, 10).toThrow(
+                'coordinate should be inside the board',
+            );
+        });
+    });
+    test('throws error if attack is placed outside the board(cell:(123,0))', () => {
+        const gb = new GameBoard();
+        expect(() => {
+            gb.receiveAttack(123, 0).toThrow(
+                'coordinate should be inside the board',
+            );
+        });
+    });
+    test('does NOT call the "hit" method of the ship if cell is already attacked', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 0;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        const mockedHit = jest.fn();
+        gb.board[y][x].ship.hit = mockedHit;
+        gb.receiveAttack(3, 0);
+        gb.receiveAttack(3, 0);
+        gb.receiveAttack(3, 0);
+        gb.receiveAttack(3, 0);
+        gb.receiveAttack(3, 0);
+        gb.receiveAttack(3, 0);
+        expect(mockedHit).toBeCalledTimes(1);
+    });
+});
