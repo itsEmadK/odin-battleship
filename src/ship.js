@@ -28,6 +28,10 @@ class Ship {
         this.#hits += 1;
     }
 
+    /**
+     *
+     * @returns {Boolean}
+     */
     isSunk() {
         return this.#hits >= this.length;
     }

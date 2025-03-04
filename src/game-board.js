@@ -1,6 +1,14 @@
+import { Ship } from './ship.js';
+
 class GameBoard {
+    /**
+     * @type {number}
+     */
     gridSize;
 
+    /**
+     * @type {{ship:Ship,attacked:Boolean}[][]}
+     */
     board;
 
     constructor(gridSize = 10) {
@@ -14,6 +22,14 @@ class GameBoard {
         }
     }
 
+    /**
+     *
+     * @param {Ship} ship
+     * @param {number} x
+     * @param {number} y
+     * @returns {Boolean} true if ship was placed successfully on the board, false if cell is already occupied, throws error otherwise
+     * @throws  if x + ship.length and y are outside the board
+     */
     placeShipHorizontally(ship, x, y) {
         if (x >= this.gridSize || y >= this.gridSize) {
             throw new Error('coordinate should be inside the board');
@@ -33,6 +49,14 @@ class GameBoard {
         return true;
     }
 
+    /**
+     *
+     * @param {Ship} ship
+     * @param {number} x
+     * @param {number} y
+     * @returns {Boolean} true if ship was placed successfully on the board, false if cell is already occupied, throws otherwise
+     * @throws {Error} if x + ship.length and y are outside the board
+     */
     placeShipVertically(ship, x, y) {
         if (x >= this.gridSize || y >= this.gridSize) {
             throw new Error('coordinate should be inside the board');
@@ -52,6 +76,12 @@ class GameBoard {
         return true;
     }
 
+    /**
+     *
+     * @param {number} x
+     * @param {number} y
+     * @throws {Error} if x or y are outside the board
+     */
     receiveAttack(x, y) {
         if (x >= this.gridSize || y >= this.gridSize) {
             throw new Error('coordinate should be inside the board');
@@ -64,6 +94,10 @@ class GameBoard {
         }
     }
 
+    /**
+     *
+     * @returns {Ship[]}
+     */
     #getAllShips() {
         const ships = [];
         for (let i = 0; i < this.gridSize; i++) {
@@ -79,6 +113,10 @@ class GameBoard {
         return ships;
     }
 
+    /**
+     *
+     * @returns {Boolean}
+     */
     areAllShipsSunk() {
         const ships = this.#getAllShips();
         for (let i = 0; i < ships.length; i++) {
