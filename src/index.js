@@ -19,6 +19,25 @@ const player2BoardDiv = document.querySelector('.board.player2');
 
 const dialog = document.querySelector('dialog.game-over');
 const playAgainButton = dialog.querySelector('.play-again');
+
+const playAITurn = () => {
+    const delay = new Promise((resolve) => {
+        setTimeout(resolve, 500);
+    });
+
+    delay.then(() => {
+        const { x: aiAttackX, y: aiAttackY } = player2.getNextAttack();
+        player1.gameBoard.receiveAttack(aiAttackX, aiAttackY);
+        displayController.renderPlayer1Board(player1.gameBoard.board);
+        if (player1.gameBoard.areAllShipsSunk()) {
+            player2.score++;
+            dialog.showModal();
+        } else {
+            turn = 1;
+        }
+    });
+};
+
 playAgainButton.addEventListener('click', () => {
     dialog.close();
     player1.gameBoard.resetBoard();
@@ -43,27 +62,7 @@ player2BoardDiv.addEventListener('click', (e) => {
                 } else {
                     turn = 2;
                     if (player2 instanceof AIPlayer) {
-                        const delay = new Promise((resolve) => {
-                            setTimeout(resolve, 500);
-                        });
-
-                        delay.then(() => {
-                            const { x: aiAttackX, y: aiAttackY } =
-                                player2.getNextAttack();
-                            player1.gameBoard.receiveAttack(
-                                aiAttackX,
-                                aiAttackY,
-                            );
-                            displayController.renderPlayer1Board(
-                                player1.gameBoard.board,
-                            );
-                            if (player1.gameBoard.areAllShipsSunk()) {
-                                player2.score++;
-                                dialog.showModal();
-                            } else {
-                                turn = 1;
-                            }
-                        });
+                        playAITurn();
                     }
                 }
             }
