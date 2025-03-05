@@ -145,6 +145,34 @@ class GameBoard {
         this.placeShipVertically(ship4, 4, 4);
         this.placeShipHorizontally(ship5, 0, 9);
     }
+
+    /**
+     *
+     * @param {number} x
+     * @param {number} y
+     * @returns {{x:number,y:number}[]}
+     */
+    findCellsOccupiedByShipInCell(x, y) {
+        if (x >= this.gridSize || x < 0 || y >= this.gridSize || y < 0) {
+            throw new Error('coordinate should be inside the board');
+        }
+
+        const shipIDInCell = this.board[y][x].shipID;
+        if (shipIDInCell === null) {
+            return [];
+        }
+
+        const cells = [];
+        for (let i = 0; i < this.gridSize; i++) {
+            for (let j = 0; j < this.gridSize; j++) {
+                const { shipID } = this.board[i][j];
+                if (shipID === shipIDInCell) {
+                    cells.push({ x: j, y: i });
+                }
+            }
+        }
+        return cells;
+    }
 }
 
 export { GameBoard };

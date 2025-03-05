@@ -472,3 +472,82 @@ describe('populate method', () => {
         expect(gb.board).toEqual(testGB.board);
     });
 });
+
+describe('findCellsOccupiedByShipInCell method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.findCellsOccupiedByShipInCell).toBeDefined();
+    });
+    test('returns all the cells occupied by the ship present in the specified cell', () => {
+        const gb = new GameBoard();
+        const ship1 = new Ship(4);
+        const x = 0;
+        const y = 0;
+        gb.placeShipHorizontally(ship1, x, y);
+        const cellsOccupied = gb.findCellsOccupiedByShipInCell(x, y);
+        expect(cellsOccupied).toEqual([
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+            { x: 3, y: 0 },
+        ]);
+    });
+
+    test('returns all the cells occupied by the ship present in the specified cell(ex2)', () => {
+        const gb = new GameBoard();
+        const ship1 = new Ship(5);
+        const x = 2;
+        const y = 0;
+        gb.placeShipVertically(ship1, x, y);
+        const cellsOccupied = gb.findCellsOccupiedByShipInCell(x, y);
+        expect(cellsOccupied).toEqual([
+            { x: 2, y: 0 },
+            { x: 2, y: 1 },
+            { x: 2, y: 2 },
+            { x: 2, y: 3 },
+            { x: 2, y: 4 },
+        ]);
+    });
+    test('returns all the cells occupied by the ship present in the specified cell(ex3)', () => {
+        const gb = new GameBoard();
+        const ship1 = new Ship(1);
+        const x = 2;
+        const y = 0;
+        gb.placeShipVertically(ship1, x, y);
+        const cellsOccupied = gb.findCellsOccupiedByShipInCell(x, y);
+        expect(cellsOccupied).toEqual([{ x: 2, y: 0 }]);
+    });
+
+    test('returns an empty array if there is no ship in the specified cell', () => {
+        const gb = new GameBoard();
+        const x = 2;
+        const y = 0;
+        const cellsOccupied = gb.findCellsOccupiedByShipInCell(x, y);
+        expect(cellsOccupied).toEqual([]);
+    });
+
+    test('throws error if the specified cell is outside of the board', () => {
+        const gb = new GameBoard();
+        const x = 22;
+        const y = 0;
+        expect(() => gb.findCellsOccupiedByShipInCell(x, y)).toThrow(
+            'coordinate should be inside the board',
+        );
+    });
+    test('throws error if the specified cell is outside of the board(ex2)', () => {
+        const gb = new GameBoard();
+        const x = 0;
+        const y = 10;
+        expect(() => gb.findCellsOccupiedByShipInCell(x, y)).toThrow(
+            'coordinate should be inside the board',
+        );
+    });
+    test('throws error if the specified cell is outside of the board(ex3)', () => {
+        const gb = new GameBoard();
+        const x = -3;
+        const y = 8;
+        expect(() => gb.findCellsOccupiedByShipInCell(x, y)).toThrow(
+            'coordinate should be inside the board',
+        );
+    });
+});
