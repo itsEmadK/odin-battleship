@@ -22,3 +22,27 @@ describe('AIPlayer class', () => {
         expect(aiPlayer.name).toBe('AI');
     });
 });
+
+describe('getNextAttack method', () => {
+    test('exists', () => {
+        const ai = new AIPlayer();
+        expect(ai.getNextAttack).toBeDefined();
+    });
+    test('returns a {x:integer, y:integer} object', () => {
+        const ai = new AIPlayer();
+        expect(Number.isInteger(ai.getNextAttack().x)).toBeTruthy();
+        expect(Number.isInteger(ai.getNextAttack().y)).toBeTruthy();
+    });
+    test('attack.x is in range [0, gameBoard.gridSize]', () => {
+        const ai = new AIPlayer();
+        for (let i = 0; i < 10000; i++) {
+            expect(ai.getNextAttack().x).toBeLessThan(ai.gameBoard.gridSize);
+        }
+    });
+    test('attack.y is in range [0, gameBoard.gridSize]', () => {
+        const ai = new AIPlayer();
+        for (let i = 0; i < 10000; i++) {
+            expect(ai.getNextAttack().y).toBeLessThan(ai.gameBoard.gridSize);
+        }
+    });
+});
