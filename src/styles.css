@@ -8,6 +8,9 @@
     --board-border: 1px solid black;
     --cell-border: var(--board-border);
     --cell-bg-color: beige;
+    --cell-bg-color-occupied: rgb(94, 87, 87);
+    --cell-bg-color-occupied-attacked: red;
+    --cell-bg-color-non-occupied-attacked: cyan;
 }
 
 .cell {
@@ -22,4 +25,16 @@
     height: auto;
     border: var(--board-border);
     aspect-ratio: 1;
+}
+
+.board.revealed .cell.occupied {
+    background-color: var(--cell-bg-color-occupied);
+}
+
+div.board .cell.attacked {
+    background-color: var(--cell-bg-color-non-occupied-attacked);
+}
+
+div.board .cell.attacked.occupied {
+    background-color: var(--cell-bg-color-occupied-attacked);
 }
