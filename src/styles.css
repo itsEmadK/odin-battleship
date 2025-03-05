@@ -33,6 +33,11 @@
     height: auto;
     border: var(--board-border);
     aspect-ratio: 1;
+    cursor: not-allowed;
+}
+
+.board.current-turn .cell {
+    cursor: default;
 }
 
 .board.revealed .cell.occupied {
