@@ -31,12 +31,13 @@ describe('GameBoard constructor', () => {
                 expect(gb.board[i].length).toBe(gb.gridSize);
             }
         });
-        test('every element of every "board" inner array is initialized as {ship:null, attacked:false}', () => {
+        test('every element of every "board" inner array is initialized as {ship:null, shipID:null, attacked:false}', () => {
             const gb = new GameBoard(8);
             for (let i = 0; i < gb.gridSize; i++) {
                 for (let j = 0; j < gb.gridSize; j++) {
                     expect(gb.board[i][j]).toEqual({
                         ship: null,
+                        shipID: null,
                         attacked: false,
                     });
                 }
@@ -80,6 +81,49 @@ describe('placeShipHorizontally Method', () => {
         expect(gb.board[y][x + 3].ship).toBe(ship);
         expect(gb.board[y][x + 4].ship).toBe(ship);
     });
+
+    test('sets the shipID prop of the cell to "{{cell.x}{cell.y}}"', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 1;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('10');
+    });
+
+    test('sets the shipID prop of the cell to "{{cell.x}{cell.y}}"(ex2)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(2);
+        const x = 7;
+        const y = 5;
+        gb.placeShipHorizontally(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('75');
+    });
+
+    test('sets the shipID prop of all the cells occupied by ship to "{{specifiedCell.x}{specifiedCell.y}}"', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 1;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('10');
+        expect(gb.board[y][x + 1].shipID).toBe('10');
+        expect(gb.board[y][x + 2].shipID).toBe('10');
+        expect(gb.board[y][x + 3].shipID).toBe('10');
+        expect(gb.board[y][x + 4].shipID).toBe('10');
+    });
+
+    test('sets the shipID prop of all the cells occupied by ship to "{{specifiedCell.x}{specifiedCell.y}}"(ex2)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(3);
+        const x = 2;
+        const y = 7;
+        gb.placeShipHorizontally(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('27');
+        expect(gb.board[y][x + 1].shipID).toBe('27');
+        expect(gb.board[y][x + 2].shipID).toBe('27');
+    });
+
     test('returns true if the ship was placed on the board', () => {
         const gb = new GameBoard();
         const ship = new Ship(5);
@@ -174,6 +218,48 @@ describe('placeShipVertically Method', () => {
         expect(gb.board[y + 2][x].ship).toBe(ship);
         expect(gb.board[y + 3][x].ship).toBe(ship);
         expect(gb.board[y + 4][x].ship).toBe(ship);
+    });
+
+    test('sets the shipID prop of the cell to "{{cell.x}{cell.y}}"', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 1;
+        const y = 0;
+        gb.placeShipVertically(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('10');
+    });
+
+    test('sets the shipID prop of the cell to "{{cell.x}{cell.y}}"(ex2)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(2);
+        const x = 7;
+        const y = 5;
+        gb.placeShipVertically(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('75');
+    });
+
+    test('sets the shipID prop of all the cells occupied by ship to "{{specifiedCell.x}{specifiedCell.y}}"', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 1;
+        const y = 0;
+        gb.placeShipVertically(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('10');
+        expect(gb.board[y + 1][x].shipID).toBe('10');
+        expect(gb.board[y + 2][x].shipID).toBe('10');
+        expect(gb.board[y + 3][x].shipID).toBe('10');
+        expect(gb.board[y + 4][x].shipID).toBe('10');
+    });
+
+    test('sets the shipID prop of all the cells occupied by ship to "{{specifiedCell.x}{specifiedCell.y}}"(ex2)', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(3);
+        const x = 2;
+        const y = 7;
+        gb.placeShipVertically(ship, x, y);
+        expect(gb.board[y][x].shipID).toBe('27');
+        expect(gb.board[y + 1][x].shipID).toBe('27');
+        expect(gb.board[y + 2][x].shipID).toBe('27');
     });
     test('returns true if the ship was placed on the board', () => {
         const gb = new GameBoard();

@@ -7,7 +7,7 @@ class GameBoard {
     gridSize;
 
     /**
-     * @type {{ship:Ship,attacked:Boolean}[][]}
+     * @type {{ship:Ship,shipID:string,attacked:Boolean}[][]}
      */
     board;
 
@@ -17,7 +17,11 @@ class GameBoard {
         for (let i = 0; i < gridSize; i++) {
             this.board[i] = new Array(gridSize);
             for (let j = 0; j < gridSize; j++) {
-                this.board[i][j] = { ship: null, attacked: false };
+                this.board[i][j] = {
+                    ship: null,
+                    shipID: null,
+                    attacked: false,
+                };
             }
         }
     }
@@ -35,7 +39,6 @@ class GameBoard {
             throw new Error('coordinate should be inside the board');
         }
         if (x + ship.length - 1 >= this.gridSize || y >= this.gridSize) {
-            console.log('horiz-error', ship, x, y);
             throw new Error('ship is too large for the board');
         }
         for (let i = 0; i < ship.length; i++) {
@@ -46,6 +49,7 @@ class GameBoard {
 
         for (let i = 0; i < ship.length; i++) {
             this.board[y][x + i].ship = ship;
+            this.board[y][x + i].shipID = `${x}${y}`;
         }
         return true;
     }
@@ -73,6 +77,7 @@ class GameBoard {
 
         for (let i = 0; i < ship.length; i++) {
             this.board[y + i][x].ship = ship;
+            this.board[y + i][x].shipID = `${x}${y}`;
         }
         return true;
     }
