@@ -20,6 +20,20 @@ const player2BoardDiv = document.querySelector('.board.player2');
 const dialog = document.querySelector('dialog.game-over');
 const playAgainButton = dialog.querySelector('.play-again');
 
+const handlePlayer1sWin = () => {
+    player1.score++;
+    const h3 = dialog.querySelector('h3');
+    h3.innerText = 'You won!';
+    dialog.showModal();
+};
+
+const handlePlayer2sWin = () => {
+    player2.score++;
+    const h3 = dialog.querySelector('h3');
+    h3.innerText = 'You lost :(';
+    dialog.showModal();
+};
+
 const playAITurn = () => {
     const delay = new Promise((resolve) => {
         setTimeout(resolve, AIResponseLatencyMS);
@@ -30,8 +44,7 @@ const playAITurn = () => {
         player1.gameBoard.receiveAttack(aiAttackX, aiAttackY);
         displayController.renderPlayer1Board(player1.gameBoard.board);
         if (player1.gameBoard.areAllShipsSunk()) {
-            player2.score++;
-            dialog.showModal();
+            handlePlayer2sWin();
         } else {
             turn = 1;
         }
@@ -57,8 +70,7 @@ player2BoardDiv.addEventListener('click', (e) => {
             if (player2.gameBoard.receiveAttack(x, y)) {
                 displayController.renderPlayer2Board(player2.gameBoard.board);
                 if (player2.gameBoard.areAllShipsSunk()) {
-                    player1.score++;
-                    dialog.showModal();
+                    handlePlayer1sWin();
                 } else {
                     turn = 2;
                     if (player2 instanceof AIPlayer) {
