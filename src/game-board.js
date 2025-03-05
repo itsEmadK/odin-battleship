@@ -34,7 +34,8 @@ class GameBoard {
         if (x >= this.gridSize || y >= this.gridSize) {
             throw new Error('coordinate should be inside the board');
         }
-        if (x + ship.length >= this.gridSize || y >= this.gridSize) {
+        if (x + ship.length - 1 >= this.gridSize || y >= this.gridSize) {
+            console.log('horiz-error', ship, x, y);
             throw new Error('ship is too large for the board');
         }
         for (let i = 0; i < ship.length; i++) {
@@ -61,7 +62,7 @@ class GameBoard {
         if (x >= this.gridSize || y >= this.gridSize) {
             throw new Error('coordinate should be inside the board');
         }
-        if (x >= this.gridSize || y + ship.length >= this.gridSize) {
+        if (x >= this.gridSize || y + ship.length - 1 >= this.gridSize) {
             throw new Error('ship is too large for the board');
         }
         for (let i = 0; i < ship.length; i++) {
@@ -125,6 +126,19 @@ class GameBoard {
             }
         }
         return true;
+    }
+
+    populate() {
+        const ship1 = new Ship(2);
+        const ship2 = new Ship(3);
+        const ship3 = new Ship(3);
+        const ship4 = new Ship(4);
+        const ship5 = new Ship(5);
+        this.placeShipHorizontally(ship1, 0, 0);
+        this.placeShipHorizontally(ship2, 7, 3);
+        this.placeShipVertically(ship3, 2, 4);
+        this.placeShipVertically(ship4, 4, 4);
+        this.placeShipHorizontally(ship5, 0, 5);
     }
 }
 
