@@ -1,5 +1,3 @@
-import { Ship } from './ship.js';
-
 const displayController = (function () {
     /**
      *
@@ -36,3 +34,5 @@ const displayController = (function () {
         renderPlayer2GameBoard,
     };
 })();
+
+export { displayController };
