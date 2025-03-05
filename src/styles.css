@@ -11,6 +11,8 @@
     --cell-bg-color-occupied: rgb(94, 87, 87);
     --cell-bg-color-occupied-attacked: red;
     --cell-bg-color-non-occupied-attacked: cyan;
+    --cell-bg-color-hover: rgb(206, 206, 181);
+    --cell-bg-color-active: rgb(191, 191, 154);
 }
 
 .cell {
@@ -19,6 +21,7 @@
 }
 
 .boards {
+    margin: 24px;
     display: flex;
     justify-content: space-around;
 }
@@ -42,4 +45,11 @@ div.board .cell.attacked {
 
 div.board .cell.attacked.occupied {
     background-color: var(--cell-bg-color-occupied-attacked);
+}
+
+.cell:hover {
+    background-color: var(--cell-bg-color-hover);
+}
+.cell:active {
+    background-color: var(--cell-bg-color-active);
 }
