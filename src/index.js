@@ -35,23 +35,24 @@ player2BoardDiv.addEventListener('click', (e) => {
         if (turn === 1) {
             const x = +e.target.dataset.x;
             const y = +e.target.dataset.y;
-            player2.gameBoard.receiveAttack(x, y);
-            displayController.renderPlayer2Board(player2.gameBoard.board);
-            turn = 2;
-            if (player2 instanceof AIPlayer) {
-                const delay = new Promise((resolve, reject) => {
-                    setTimeout(resolve, 500);
-                });
+            if (player2.gameBoard.receiveAttack(x, y)) {
+                displayController.renderPlayer2Board(player2.gameBoard.board);
+                turn = 2;
+                if (player2 instanceof AIPlayer) {
+                    const delay = new Promise((resolve, reject) => {
+                        setTimeout(resolve, 500);
+                    });
 
-                delay.then(() => {
-                    const { x: aiAttackX, y: aiAttackY } =
-                        player2.getNextAttack();
-                    player1.gameBoard.receiveAttack(aiAttackX, aiAttackY);
-                    displayController.renderPlayer1Board(
-                        player1.gameBoard.board,
-                    );
-                    turn = 1;
-                });
+                    delay.then(() => {
+                        const { x: aiAttackX, y: aiAttackY } =
+                            player2.getNextAttack();
+                        player1.gameBoard.receiveAttack(aiAttackX, aiAttackY);
+                        displayController.renderPlayer1Board(
+                            player1.gameBoard.board,
+                        );
+                        turn = 1;
+                    });
+                }
             }
         }
     }
