@@ -4,7 +4,7 @@ import { displayController } from './displayController.js';
 import './styles.css';
 
 let turn = 1;
-
+let AIResponseLatencyMS = 0;
 const player1 = new Player('Player1');
 player1.gameBoard.populate();
 
@@ -22,7 +22,7 @@ const playAgainButton = dialog.querySelector('.play-again');
 
 const playAITurn = () => {
     const delay = new Promise((resolve) => {
-        setTimeout(resolve, 500);
+        setTimeout(resolve, AIResponseLatencyMS);
     });
 
     delay.then(() => {
