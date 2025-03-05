@@ -23,15 +23,15 @@ const displayController = (function () {
             }
         }
     }
-    function renderPlayer1GameBoard(board) {
+    function renderPlayer1Board(board) {
         renderGameBoard(board, true);
     }
-    function renderPlayer2GameBoard(board) {
+    function renderPlayer2Board(board) {
         renderGameBoard(board, false);
     }
     return {
-        renderPlayer1GameBoard,
-        renderPlayer2GameBoard,
+        renderPlayer1Board,
+        renderPlayer2Board,
     };
 })();
 
