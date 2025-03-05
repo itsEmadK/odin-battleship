@@ -1,6 +1,4 @@
 class Ship {
-    id;
-
     /**
      * @type {number}
      */
@@ -22,9 +20,8 @@ class Ship {
      *
      * @param {number} length
      */
-    constructor(id, length) {
+    constructor(length) {
         this.length = length;
-        this.id = id;
     }
 
     hit() {
