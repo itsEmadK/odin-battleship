@@ -14,6 +14,8 @@ const displayController = (function () {
                 const { ship, attacked } = board[i][j];
                 const cellDiv = document.createElement('div');
                 cellDiv.classList.add('cell');
+                cellDiv.dataset.x = j;
+                cellDiv.dataset.y = i;
                 if (ship !== null) {
                     cellDiv.classList.add('occupied');
                 }
