@@ -379,7 +379,7 @@ describe('populate method', () => {
         testGB.placeShipHorizontally(ship2, 7, 3);
         testGB.placeShipVertically(ship3, 2, 4);
         testGB.placeShipVertically(ship4, 4, 4);
-        testGB.placeShipHorizontally(ship5, 0, 5);
+        testGB.placeShipHorizontally(ship5, 0, 9);
 
         const gb = new GameBoard();
         gb.populate();

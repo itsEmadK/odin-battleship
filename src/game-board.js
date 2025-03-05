@@ -138,7 +138,7 @@ class GameBoard {
         this.placeShipHorizontally(ship2, 7, 3);
         this.placeShipVertically(ship3, 2, 4);
         this.placeShipVertically(ship4, 4, 4);
-        this.placeShipHorizontally(ship5, 0, 5);
+        this.placeShipHorizontally(ship5, 0, 9);
     }
 }
 
