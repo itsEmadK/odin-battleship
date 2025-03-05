@@ -613,3 +613,28 @@ describe('findCellsAffectedByShipIfLaid static method', () => {
         ]);
     });
 });
+
+describe('resetBoard method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.resetBoard).toBeDefined();
+    });
+    test('resets the board prop to a 2D array of size gridSize*gridSize, filled with {ship:null,shipID:null,attacked:false}', () => {
+        const gb = new GameBoard();
+        gb.populate();
+        gb.resetBoard();
+        const expectedArray = [];
+        for (let i = 0; i < gb.gridSize; i++) {
+            expectedArray.push(new Array(gb.gridSize));
+            for (let j = 0; j < gb.gridSize; j++) {
+                expectedArray[i][j] = {
+                    ship: null,
+                    shipID: null,
+                    attacked: false,
+                };
+            }
+        }
+
+        expect(gb.board).toEqual(expectedArray);
+    });
+});

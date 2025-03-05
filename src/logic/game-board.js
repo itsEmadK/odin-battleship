@@ -176,6 +176,18 @@ class GameBoard {
         return cells;
     }
 
+    resetBoard() {
+        for (let i = 0; i < this.gridSize; i++) {
+            for (let j = 0; j < this.gridSize; j++) {
+                this.board[i][j] = {
+                    ship: null,
+                    shipID: null,
+                    attacked: false,
+                };
+            }
+        }
+    }
+
     static findCellsAffectedByShipIfLaid(x, y, shipLength, layHorizontally) {
         const cells = [];
         for (let i = 0; i < shipLength; i++) {
