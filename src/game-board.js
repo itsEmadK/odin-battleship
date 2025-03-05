@@ -97,7 +97,9 @@ class GameBoard {
             if (this.board[y][x].ship !== null) {
                 this.board[y][x].ship.hit();
             }
+            return true;
         }
+        return false;
     }
 
     /**

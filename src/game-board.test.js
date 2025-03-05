@@ -400,6 +400,23 @@ describe('receiveAttack method', () => {
         gb.receiveAttack(3, 0);
         expect(mockedHit).toBeCalledTimes(1);
     });
+    test('returns true if the attack was successful', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 0;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        expect(gb.receiveAttack(3, 0)).toBe(true);
+    });
+    test('returns false if the attacked cell is already attacked', () => {
+        const gb = new GameBoard();
+        const ship = new Ship(5);
+        const x = 0;
+        const y = 0;
+        gb.placeShipHorizontally(ship, x, y);
+        gb.receiveAttack(3, 0);
+        expect(gb.receiveAttack(3, 0)).toBe(false);
+    });
 });
 
 describe('areAllShipsSunk method', () => {
