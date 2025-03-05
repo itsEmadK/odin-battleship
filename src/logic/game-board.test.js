@@ -568,3 +568,48 @@ describe('findCellsOccupiedByShipInCell method', () => {
         );
     });
 });
+
+describe('findCellsAffectedByShipIfLaid static method', () => {
+    test('exists', () => {
+        expect(GameBoard.findCellsAffectedByShipIfLaid).toBeDefined();
+    });
+    test('returns an array of {x,y} representing the cells that will be occupied by the ship', () => {
+        const layHorizontally = true;
+        const x = 0;
+        const y = 0;
+        const shipLength = 4;
+        expect(
+            GameBoard.findCellsAffectedByShipIfLaid(
+                x,
+                y,
+                shipLength,
+                layHorizontally,
+            ),
+        ).toEqual([
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+            { x: 3, y: 0 },
+        ]);
+    });
+    test('returns an array of {x,y} representing the cells that will be occupied by the ship(ex2)', () => {
+        const layHorizontally = false;
+        const x = 0;
+        const y = 2;
+        const shipLength = 5;
+        expect(
+            GameBoard.findCellsAffectedByShipIfLaid(
+                x,
+                y,
+                shipLength,
+                layHorizontally,
+            ),
+        ).toEqual([
+            { x: 0, y: 2 },
+            { x: 0, y: 3 },
+            { x: 0, y: 4 },
+            { x: 0, y: 5 },
+            { x: 0, y: 6 },
+        ]);
+    });
+});

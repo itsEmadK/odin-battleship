@@ -175,6 +175,18 @@ class GameBoard {
         }
         return cells;
     }
+
+    static findCellsAffectedByShipIfLaid(x, y, shipLength, layHorizontally) {
+        const cells = [];
+        for (let i = 0; i < shipLength; i++) {
+            if (layHorizontally) {
+                cells.push({ x: x + i, y });
+            } else {
+                cells.push({ x, y: y + i });
+            }
+        }
+        return cells;
+    }
 }
 
 export { GameBoard };
