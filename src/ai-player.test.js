@@ -14,8 +14,11 @@ describe('AIPlayer class', () => {
         ).toBeTruthy();
     });
     test('constructor initializes the player props', () => {
-        const gameBoard = new GameBoard();
-        const aiPlayer = new AIPlayer(gameBoard);
-        expect(aiPlayer.gameBoard).toBe(gameBoard);
+        const aiPlayer = new AIPlayer('AmooAi');
+        expect(aiPlayer.name).toBe('AmooAi');
+    });
+    test('constructor initializes the player "name" prop to "AI", if no arg is given', () => {
+        const aiPlayer = new AIPlayer();
+        expect(aiPlayer.name).toBe('AI');
     });
 });
