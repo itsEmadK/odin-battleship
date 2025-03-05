@@ -3,3 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --board-border: 1px solid black;
+    --cell-border: var(--board-border);
+    --cell-bg-color: beige;
+}
+
+.cell {
+    background-color: var(--cell-bg-color);
+    border: var(--cell-border);
+}
+
+.board {
+    display: grid;
+    width: 350px;
+    grid-template-columns: repeat(10, 1fr);
+    height: auto;
+    border: var(--board-border);
+    aspect-ratio: 1;
+}
