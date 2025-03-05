@@ -2,8 +2,9 @@ const displayController = (function () {
     /**
      *
      * @param {{ship:Ship,attacked:Boolean}[][]} board
+     * @param {Boolean} player1
      */
-    function renderGameBoard(board, player1 = true) {
+    function renderGameBoard(board, player1) {
         const boardGridDiv = document.querySelector(
             `div.board.${player1 ? 'player1' : 'player2'}`,
         );
