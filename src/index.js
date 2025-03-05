@@ -1,5 +1,5 @@
-import { Player } from './player.js';
-import { AIPlayer } from './ai-player.js';
+import { Player } from './logic/player.js';
+import { AIPlayer } from './logic/ai-player.js';
 import { displayController } from './displayController.js';
 import './styles.css';
 

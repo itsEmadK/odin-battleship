@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import { AIPlayer } from './ai-player.js';
 import { Player } from './player.js';
-import { GameBoard } from './game-board.js';
 
 describe('AIPlayer class', () => {
     test('exists', () => {
