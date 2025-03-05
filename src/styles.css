@@ -18,6 +18,11 @@
     border: var(--cell-border);
 }
 
+.boards {
+    display: flex;
+    justify-content: space-around;
+}
+
 .board {
     display: grid;
     width: 350px;
