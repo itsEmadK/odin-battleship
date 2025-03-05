@@ -35,14 +35,39 @@ describe('getNextAttack method', () => {
     });
     test('attack.x is in range [0, gameBoard.gridSize]', () => {
         const ai = new AIPlayer();
-        for (let i = 0; i < 10000; i++) {
+        for (let i = 0; i < 80; i++) {
             expect(ai.getNextAttack().x).toBeLessThan(ai.gameBoard.gridSize);
         }
     });
     test('attack.y is in range [0, gameBoard.gridSize]', () => {
         const ai = new AIPlayer();
-        for (let i = 0; i < 10000; i++) {
+        for (let i = 0; i < 80; i++) {
             expect(ai.getNextAttack().y).toBeLessThan(ai.gameBoard.gridSize);
         }
+    });
+    test('does NOT return the same move twice', () => {
+        const ai = new AIPlayer();
+        const attacks = [];
+        for (let i = 0; i < 100; i++) {
+            const attack = ai.getNextAttack();
+            const repeated = !!attacks.find(
+                (cell) => cell.x === attack.x && cell.y === attack.y,
+            );
+            expect(repeated).toBe(false);
+            attacks.push(attack);
+        }
+    });
+    test('returns null if all possible moves are played', () => {
+        const ai = new AIPlayer();
+        for (
+            let i = 0;
+            i < ai.gameBoard.gridSize * ai.gameBoard.gridSize;
+            i++
+        ) {
+            ai.getNextAttack();
+        }
+        expect(ai.getNextAttack()).toBe(null);
+        expect(ai.getNextAttack()).toBe(null);
+        expect(ai.getNextAttack()).toBe(null);
     });
 });
