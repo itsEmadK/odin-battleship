@@ -133,7 +133,10 @@ function onFormationScreenLoaded() {
             }
         });
         shipDiv.addEventListener('dragstart', (e) => {
-            if (selectedShipLength === 0) {
+            if (
+                selectedShipLength === 0 &&
+                !shipDiv.classList.contains('placed')
+            ) {
                 shipDiv.classList.add('selected');
                 selectedShipLength = +shipDiv.dataset.length;
                 lastGrabbedShipCellNumber =
