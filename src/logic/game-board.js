@@ -208,13 +208,16 @@ class GameBoard {
             shipLength,
             layHorizontally,
         );
-        let possible = true;
-        cellsAffected.forEach((cell) => {
+        for (let i = 0; i < cellsAffected.length; i++) {
+            const cell = cellsAffected[i];
             if (!this.isCellInsideBoard(cell.x, cell.y)) {
-                possible = false;
+                return false;
             }
-        });
-        return possible;
+            if (this.board[cell.y][cell.x].ship !== null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static findCellsAffectedByShipIfLaid(x, y, shipLength, layHorizontally) {

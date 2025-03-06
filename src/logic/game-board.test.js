@@ -711,4 +711,18 @@ describe('isPossibleToPlaceShip method', () => {
             gb.isPossibleToPlaceShip(x, y, shipLength, layHorizontally),
         ).toBe(false);
     });
+
+    test('returns false if cell is already occupied', () => {
+        const gb = new GameBoard(10);
+        const ship = new Ship(4);
+        gb.placeShipHorizontally(ship, 0, 0);
+        expect(gb.isPossibleToPlaceShip(1, 0, 2, true)).toBe(false);
+    });
+
+    test('returns false if cell is already occupied(vert example)', () => {
+        const gb = new GameBoard(10);
+        const ship = new Ship(4);
+        gb.placeShipVertically(ship, 2, 0);
+        expect(gb.isPossibleToPlaceShip(2, 2, 2, true)).toBe(false);
+    });
 });
