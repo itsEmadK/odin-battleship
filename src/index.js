@@ -87,5 +87,34 @@ function onMainScreenLoaded() {
         }
     });
 }
+function onFormationScreenLoaded() {
+    let selectedShipLength = 0;
+    let layHorizontally = true;
+    const shipsContainer = document.querySelector('.ships');
+    const shipDivs = document.querySelectorAll('.ship');
+    shipDivs.forEach((shipDiv) => {
+        shipDiv.addEventListener('click', () => {
+            const isPlacing = shipsContainer.classList.contains('placing');
+            if (!isPlacing) {
+                shipDiv.classList.add('selected');
+                selectedShipLength = +shipDiv.dataset.length;
+                shipsContainer.classList.add('placing');
+            } else if (shipDiv.classList.contains('selected')) {
+                shipDiv.classList.remove('selected');
+                shipsContainer.classList.remove('placing');
+            } else {
+                shipDivs.forEach((sd) => {
+                    sd.classList.remove('selected');
+                });
+                shipDiv.classList.add('selected');
+                selectedShipLength = +shipDiv.dataset.length;
+            }
+        });
+    });
+}
 
 displayController.loadMainScreen(player1, player2, onMainScreenLoaded);
+displayController.loadFormationScreen(
+    player1.gameBoard.gridSize,
+    onFormationScreenLoaded,
+);
