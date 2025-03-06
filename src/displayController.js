@@ -278,6 +278,27 @@ const displayController = (function () {
         onLoaded();
     }
 
+    function loadPassTheDeviceScreen(onLoaded) {
+        const main = document.querySelector('main');
+        if (main.innerHTML) {
+            main.innerHTML = '';
+        }
+        const h2 = document.createElement('h2');
+        h2.innerText = 'Pass The Device!';
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('pass-the-device');
+
+        const continueButton = document.createElement('button');
+        continueButton.type = 'button';
+        continueButton.innerText = 'Continue';
+        continueButton.classList.add('continue');
+
+        containerDiv.appendChild(h2);
+        containerDiv.appendChild(continueButton);
+        main.appendChild(containerDiv);
+        onLoaded();
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
@@ -286,6 +307,7 @@ const displayController = (function () {
         loadFormationScreen,
         renderFormationBoard,
         loadPlayerInfoScreen,
+        loadPassTheDeviceScreen,
     };
 })();
 

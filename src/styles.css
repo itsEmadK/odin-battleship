@@ -362,3 +362,38 @@ form input {
 form input:focus {
     outline: 2px solid black;
 }
+
+div.pass-the-device {
+    height: 100vh;
+    display: grid;
+    gap: 4em;
+    justify-items: center;
+}
+
+div.pass-the-device h2 {
+    color: white;
+    font-size: 2.5rem;
+    align-self: end;
+    letter-spacing: 1.5px;
+}
+
+main:has(div.pass-the-device) {
+    padding: 0;
+}
+div.pass-the-device button.continue {
+    appearance: none;
+    border: 2px solid black;
+    border-radius: 0.4rem;
+    align-self: start;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+div.pass-the-device button.continue:hover {
+    background-color: rgb(215, 215, 215);
+}
+
+div.pass-the-device button.continue:active {
+    background-color: rgb(187, 187, 187);
+}
