@@ -140,6 +140,39 @@ function onFormationScreenLoaded() {
         xAxisButton.classList.remove('selected');
     });
 
+    const highLightAffectedCells = (x, y) => {
+        const cellsAffected = GameBoard.findCellsAffectedByShipIfLaid(
+            x,
+            y,
+            selectedShipLength,
+            layHorizontally,
+        );
+
+        const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+            x,
+            y,
+            selectedShipLength,
+            layHorizontally,
+        );
+
+        cellsAffected.forEach((affectedCell) => {
+            if (
+                player1.gameBoard.isCellInsideBoard(
+                    affectedCell.x,
+                    affectedCell.y,
+                )
+            ) {
+                const node = document.querySelector(
+                    `[data-x="${affectedCell.x}"][data-y="${affectedCell.y}"]`,
+                );
+                if (possibleToPlace) {
+                    node.classList.add('hover');
+                } else {
+                    node.classList.add('hover', 'na');
+                }
+            }
+        });
+    };
     const board = document.querySelector('.formation-container .board');
     board.addEventListener('mouseover', (e) => {
         if (e.target.classList.contains('cell')) {
@@ -149,37 +182,7 @@ function onFormationScreenLoaded() {
             });
             const x = +e.target.dataset.x;
             const y = +e.target.dataset.y;
-            const cellsAffected = GameBoard.findCellsAffectedByShipIfLaid(
-                x,
-                y,
-                selectedShipLength,
-                layHorizontally,
-            );
-
-            const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
-                x,
-                y,
-                selectedShipLength,
-                layHorizontally,
-            );
-
-            cellsAffected.forEach((affectedCell) => {
-                if (
-                    player1.gameBoard.isCellInsideBoard(
-                        affectedCell.x,
-                        affectedCell.y,
-                    )
-                ) {
-                    const node = document.querySelector(
-                        `[data-x="${affectedCell.x}"][data-y="${affectedCell.y}"]`,
-                    );
-                    if (possibleToPlace) {
-                        node.classList.add('hover');
-                    } else {
-                        node.classList.add('hover', 'na');
-                    }
-                }
-            });
+            highLightAffectedCells(x, y);
         }
     });
     board.addEventListener('mouseleave', () => {
