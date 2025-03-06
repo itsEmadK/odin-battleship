@@ -174,6 +174,13 @@ function onFormationScreenLoaded() {
         });
     };
     const board = document.querySelector('.formation-container .board');
+    const clearAllHighlights = () => {
+        board.childNodes.forEach((node) => {
+            node.classList.remove('hover');
+            node.classList.remove('na');
+        });
+    };
+
     board.addEventListener('mouseover', (e) => {
         if (e.target.classList.contains('cell')) {
             board.childNodes.forEach((node) => {
@@ -186,10 +193,7 @@ function onFormationScreenLoaded() {
         }
     });
     board.addEventListener('mouseleave', () => {
-        board.childNodes.forEach((node) => {
-            node.classList.remove('hover');
-            node.classList.remove('na');
-        });
+        clearAllHighlights();
     });
     board.addEventListener('click', (e) => {
         if (e.target.classList.contains('cell') && selectedShipLength > 0) {
@@ -218,6 +222,26 @@ function onFormationScreenLoaded() {
                 }
                 selectedShipLength = 0;
                 displayController.renderFormationBoard(player1.gameBoard.board);
+            }
+        }
+    });
+
+    document.body.addEventListener('keyup', (e) => {
+        if (document.body.querySelector('.formation-container')) {
+            if (e.key.toLowerCase() === 'r') {
+                const originCell = document.querySelector('.cell.hover');
+
+                layHorizontally = !layHorizontally;
+                xAxisButton.classList.toggle('selected');
+                yAxisButton.classList.toggle('selected');
+
+                if (originCell) {
+                    // cursor was on one of the board cells, otherwise no.
+                    const x = +originCell.dataset.x;
+                    const y = +originCell.dataset.y;
+                    clearAllHighlights();
+                    highLightAffectedCells(x, y);
+                }
             }
         }
     });
