@@ -92,7 +92,7 @@ const displayController = (function () {
         const axisButtonsContainer = document.createElement('div');
         axisButtonsContainer.classList.add('axis');
         const xAxisButton = document.createElement('button');
-        xAxisButton.classList.add('x-axis');
+        xAxisButton.classList.add('x-axis', 'selected');
         xAxisButton.innerText = 'X-Axis';
         const yAxisButton = document.createElement('button');
         yAxisButton.classList.add('y-axis');
