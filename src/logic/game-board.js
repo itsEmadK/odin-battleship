@@ -188,6 +188,12 @@ class GameBoard {
         }
     }
 
+    isCellInsideBoard(x, y) {
+        const isXinRange = x < this.gridSize && x >= 0;
+        const isYinRange = y < this.gridSize && y >= 0;
+        return isXinRange && isYinRange;
+    }
+
     static findCellsAffectedByShipIfLaid(x, y, shipLength, layHorizontally) {
         const cells = [];
         for (let i = 0; i < shipLength; i++) {

@@ -638,3 +638,26 @@ describe('resetBoard method', () => {
         expect(gb.board).toEqual(expectedArray);
     });
 });
+
+describe('isCellInsideBoard method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.isCellInsideBoard).toBeDefined();
+    });
+    test('returns true if given 3, 5 for a board of size 10', () => {
+        const gb = new GameBoard(10);
+        expect(gb.isCellInsideBoard(3, 5)).toBe(true);
+    });
+    test('returns false if given 10, 5 for a board of size 10', () => {
+        const gb = new GameBoard(10);
+        expect(gb.isCellInsideBoard(10, 5)).toBe(false);
+    });
+    test('returns false if given 0, -5 for a board of size 10', () => {
+        const gb = new GameBoard(10);
+        expect(gb.isCellInsideBoard(0, -5)).toBe(false);
+    });
+    test('returns true if given 4, 5 for a board of size 6', () => {
+        const gb = new GameBoard(6);
+        expect(gb.isCellInsideBoard(4, 5)).toBe(true);
+    });
+});
