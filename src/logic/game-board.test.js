@@ -661,3 +661,54 @@ describe('isCellInsideBoard method', () => {
         expect(gb.isCellInsideBoard(4, 5)).toBe(true);
     });
 });
+
+describe('isPossibleToPlaceShip method', () => {
+    test('exists', () => {
+        const gb = new GameBoard();
+        expect(gb.isPossibleToPlaceShip).toBeDefined();
+    });
+
+    test('returns true for x:3, y:5, shipLength:3, layHorizontally:true for a board of size 10', () => {
+        const gb = new GameBoard(10);
+        const x = 3;
+        const y = 5;
+        const shipLength = 3;
+        const layHorizontally = true;
+        expect(
+            gb.isPossibleToPlaceShip(x, y, shipLength, layHorizontally),
+        ).toBe(true);
+    });
+
+    test('returns false for x:0, y:0, shipLength:6, layHorizontally:true for a board of size 5', () => {
+        const gb = new GameBoard(5);
+        const x = 0;
+        const y = 0;
+        const shipLength = 6;
+        const layHorizontally = true;
+        expect(
+            gb.isPossibleToPlaceShip(x, y, shipLength, layHorizontally),
+        ).toBe(false);
+    });
+
+    test('returns true for x:0, y:0, shipLength:6, layHorizontally:false for a board of size 6', () => {
+        const gb = new GameBoard(6);
+        const x = 0;
+        const y = 0;
+        const shipLength = 6;
+        const layHorizontally = false;
+        expect(
+            gb.isPossibleToPlaceShip(x, y, shipLength, layHorizontally),
+        ).toBe(true);
+    });
+
+    test('returns false for x:3, y:7, shipLength:4, layHorizontally:false for a board of size 10', () => {
+        const gb = new GameBoard(10);
+        const x = 3;
+        const y = 7;
+        const shipLength = 4;
+        const layHorizontally = false;
+        expect(
+            gb.isPossibleToPlaceShip(x, y, shipLength, layHorizontally),
+        ).toBe(false);
+    });
+});

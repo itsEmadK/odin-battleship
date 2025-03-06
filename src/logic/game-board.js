@@ -194,6 +194,32 @@ class GameBoard {
         return isXinRange && isYinRange;
     }
 
+    /**
+     *
+     * @param {number} x
+     * @param {number} y
+     * @param {number} shipLength
+     * @param {Boolean} layHorizontally
+     */
+    isPossibleToPlaceShip(x, y, shipLength, layHorizontally) {
+        const cellsAffected = GameBoard.findCellsAffectedByShipIfLaid(
+            x,
+            y,
+            shipLength,
+            layHorizontally,
+        );
+        let possible = true;
+        cellsAffected.forEach((cell) => {
+            if (
+                !this.isCellInsideBoard(cell.x, cell.y) ||
+                this.board[cell.y][cell.x].ship !== null
+            ) {
+                possible = false;
+            }
+        });
+        return possible;
+    }
+
     static findCellsAffectedByShipIfLaid(x, y, shipLength, layHorizontally) {
         const cells = [];
         for (let i = 0; i < shipLength; i++) {
