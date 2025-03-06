@@ -2,11 +2,11 @@ const displayController = (function () {
     /**
      *
      * @param {{ship:Ship,attacked:Boolean}[][]} board
-     * @param {Boolean} player1
+     * @param {Boolean} isPlayer1
      */
-    function renderGameBoard(board, player1) {
+    function renderGameBoard(board, isPlayer1) {
         const boardGridDiv = document.querySelector(
-            `div.board.${player1 ? 'player1' : 'player2'}`,
+            `div.board.${isPlayer1 ? 'player1' : 'player2'}`,
         );
         boardGridDiv.innerHTML = '';
         for (let i = 0; i < board.length; i++) {
@@ -32,9 +32,30 @@ const displayController = (function () {
     function renderPlayer2Board(board) {
         renderGameBoard(board, false);
     }
+
+    function loadMainScreen(player1, player2, onLoaded) {
+        const main = document.querySelector('main');
+        if (main.innerHTML) {
+            main.innerHTML = '';
+        }
+        const boardsContainer = document.createElement('div');
+        boardsContainer.classList.add('boards');
+        const player1BoardDiv = document.createElement('div');
+        player1BoardDiv.classList.add('board', 'player1');
+        const player2BoardDiv = document.createElement('div');
+        player2BoardDiv.classList.add('board', 'player2');
+        boardsContainer.appendChild(player1BoardDiv);
+        boardsContainer.appendChild(player2BoardDiv);
+        main.appendChild(boardsContainer);
+        renderPlayer1Board(player1.gameBoard.board);
+        renderPlayer2Board(player2.gameBoard.board);
+        onLoaded();
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
+        loadMainScreen,
     };
 })();
 
