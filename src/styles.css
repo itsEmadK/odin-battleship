@@ -314,6 +314,12 @@ button.ai:not(.selected):active {
     background-color: rgb(185, 199, 211);
 }
 
+main:has(form.player-info) {
+    display: grid;
+    place-content: center;
+    height: 100vh;
+}
+
 form.player-info {
     display: grid;
     gap: 1.75em;
