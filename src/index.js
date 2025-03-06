@@ -18,7 +18,6 @@ function onGameOverDialogLoaded() {
         dialog.close();
         player1.gameBoard.resetBoard();
         player2.gameBoard.resetBoard();
-        player2.gameBoard.populate();
         displayController.loadFormationScreen(player1.gameBoard.gridSize, () =>
             onFormationScreenLoaded(true),
         );
@@ -35,13 +34,14 @@ function onMainScreenLoaded() {
         });
     };
     const handlePlayer2sWin = () => {
+        turn = 1;
         player2.score++;
-        const dialog = document.querySelector('dialog.game-over');
-        const h3 = dialog.querySelector('h3');
-        h3.innerText = 'You lost :(';
-        dialog.classList.remove('win');
-        dialog.classList.add('loss');
-        dialog.showModal();
+        displayController.loadGameOverDialog('You won!', () => {
+            const dialog = document.querySelector('dialog.game-over');
+            dialog.classList.add('loss');
+            dialog.classList.remove('win');
+            onGameOverDialogLoaded();
+        });
     };
     const playAITurn = () => {
         const delay = new Promise((resolve) => {
@@ -66,9 +66,10 @@ function onMainScreenLoaded() {
     const player2BoardDiv = document.querySelector('.board.player2');
     player2BoardDiv.addEventListener('click', (e) => {
         if ([...e.target.classList].includes('cell')) {
+            const x = +e.target.dataset.x;
+            const y = +e.target.dataset.y;
+
             if (turn === 1) {
-                const x = +e.target.dataset.x;
-                const y = +e.target.dataset.y;
                 if (player2.gameBoard.receiveAttack(x, y)) {
                     displayController.renderPlayer2Board(
                         player2.gameBoard.board,
@@ -79,8 +80,22 @@ function onMainScreenLoaded() {
                         turn = 2;
                         if (player2 instanceof AIPlayer) {
                             playAITurn();
+                        } else {
+                            displayController.loadPassTheDeviceScreen(
+                                onPassTheDeviceScreenLoaded,
+                            );
                         }
                     }
+                }
+            } else if (player1.gameBoard.receiveAttack(x, y)) {
+                displayController.renderPlayer2Board(player1.gameBoard.board);
+                if (player1.gameBoard.areAllShipsSunk()) {
+                    handlePlayer2sWin();
+                } else {
+                    turn = 1;
+                    displayController.loadPassTheDeviceScreen(
+                        onPassTheDeviceScreenLoaded,
+                    );
                 }
             }
         }
@@ -163,6 +178,13 @@ function onFormationScreenLoaded(isPlayer1) {
                         false,
                         true,
                         onPlayerInfoScreenLoaded,
+                    );
+                } else if (player2 instanceof AIPlayer) {
+                    player2.gameBoard.populate();
+                    displayController.loadMainScreen(
+                        player1,
+                        player2,
+                        onMainScreenLoaded,
                     );
                 } else {
                     displayController.loadFormationScreen(
@@ -370,6 +392,7 @@ function onPlayerInfoScreenLoaded() {
                 );
             } else {
                 player2 = new AIPlayer(name);
+                player2.gameBoard.populate();
                 displayController.loadMainScreen(
                     player1,
                     player2,
@@ -379,10 +402,23 @@ function onPlayerInfoScreenLoaded() {
         }
     });
 }
-
-// displayController.loadFormationScreen(
-//     player1.gameBoard.gridSize,
-//     onFormationScreenLoaded,
-// );
+function onPassTheDeviceScreenLoaded() {
+    const continueButton = document.querySelector('button.continue');
+    continueButton.addEventListener('click', () => {
+        if (turn === 1) {
+            displayController.loadMainScreen(
+                player1,
+                player2,
+                onMainScreenLoaded,
+            );
+        } else {
+            displayController.loadMainScreen(
+                player2,
+                player1,
+                onMainScreenLoaded,
+            );
+        }
+    });
+}
 
 displayController.loadPlayerInfoScreen(true, false, onPlayerInfoScreenLoaded);
