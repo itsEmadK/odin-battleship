@@ -7,9 +7,9 @@ import { Ship } from './logic/ship.js';
 
 let turn = 1;
 const AIResponseLatencyMS = 0;
-const player1 = new Player('Player1');
-const player2 = new AIPlayer();
-player2.gameBoard.populate();
+let player1 = null;
+let player2 = null;
+// player2.gameBoard.populate();
 
 function onGameOverDialogLoaded() {
     const dialog = document.querySelector('dialog.game-over');
@@ -19,9 +19,8 @@ function onGameOverDialogLoaded() {
         player1.gameBoard.resetBoard();
         player2.gameBoard.resetBoard();
         player2.gameBoard.populate();
-        displayController.loadFormationScreen(
-            player1.gameBoard.gridSize,
-            onFormationScreenLoaded,
+        displayController.loadFormationScreen(player1.gameBoard.gridSize, () =>
+            onFormationScreenLoaded(true),
         );
     });
 }
@@ -87,7 +86,9 @@ function onMainScreenLoaded() {
         }
     });
 }
-function onFormationScreenLoaded() {
+function onFormationScreenLoaded(isPlayer1) {
+    const player = isPlayer1 ? player1 : player2;
+
     let selectedShipLength = 0;
     let layHorizontally = false;
     let shipsLaid = 0;
@@ -155,16 +156,32 @@ function onFormationScreenLoaded() {
     const confirmButton = document.querySelector('button.confirm');
     confirmButton.addEventListener('click', () => {
         if (shipsLaid === 5) {
-            displayController.loadMainScreen(
-                player1,
-                player2,
-                onMainScreenLoaded,
-            );
+            if (isPlayer1) {
+                const shouldInitializePlayer2 = player2 === null;
+                if (shouldInitializePlayer2) {
+                    displayController.loadPlayerInfoScreen(
+                        false,
+                        true,
+                        onPlayerInfoScreenLoaded,
+                    );
+                } else {
+                    displayController.loadFormationScreen(
+                        player2.gameBoard.gridSize,
+                        () => onFormationScreenLoaded(false),
+                    );
+                }
+            } else {
+                displayController.loadMainScreen(
+                    player1,
+                    player2,
+                    onMainScreenLoaded,
+                );
+            }
         }
     });
 
     const placeShipOnBoard = (x, y) => {
-        const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+        const possibleToPlace = player.gameBoard.isPossibleToPlaceShip(
             x,
             y,
             selectedShipLength,
@@ -173,9 +190,9 @@ function onFormationScreenLoaded() {
         if (possibleToPlace) {
             const ship = new Ship(selectedShipLength);
             if (layHorizontally) {
-                player1.gameBoard.placeShipHorizontally(ship, x, y);
+                player.gameBoard.placeShipHorizontally(ship, x, y);
             } else {
-                player1.gameBoard.placeShipVertically(ship, x, y);
+                player.gameBoard.placeShipVertically(ship, x, y);
             }
             const selectedShipDiv =
                 shipsContainer.querySelector('.ship.selected');
@@ -186,7 +203,7 @@ function onFormationScreenLoaded() {
                 confirmButton.classList.add('enabled');
             }
             selectedShipLength = 0;
-            displayController.renderFormationBoard(player1.gameBoard.board);
+            displayController.renderFormationBoard(player.gameBoard.board);
         }
     };
 
@@ -213,7 +230,7 @@ function onFormationScreenLoaded() {
             layHorizontally,
         );
 
-        const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+        const possibleToPlace = player.gameBoard.isPossibleToPlaceShip(
             x,
             y,
             selectedShipLength,
@@ -222,7 +239,7 @@ function onFormationScreenLoaded() {
 
         cellsAffected.forEach((affectedCell) => {
             if (
-                player1.gameBoard.isCellInsideBoard(
+                player.gameBoard.isCellInsideBoard(
                     affectedCell.x,
                     affectedCell.y,
                 )
@@ -310,8 +327,62 @@ function onFormationScreenLoaded() {
         }
     });
 }
+function onPlayerInfoScreenLoaded() {
+    const playerNameInput = document.querySelector('#player-name');
+    const confirmButton = document.querySelector('form button.confirm-form');
 
-displayController.loadFormationScreen(
-    player1.gameBoard.gridSize,
-    onFormationScreenLoaded,
-);
+    let isHuman = true;
+    const humanButton = document.querySelector('button.human');
+    const aiButton = document.querySelector('button.ai');
+
+    if (humanButton) {
+        humanButton.addEventListener('click', () => {
+            isHuman = true;
+            humanButton.classList.add('selected');
+            aiButton.classList.remove('selected');
+        });
+    }
+
+    if (aiButton) {
+        aiButton.addEventListener('click', () => {
+            isHuman = false;
+            humanButton.classList.remove('selected');
+            aiButton.classList.add('selected');
+        });
+    }
+
+    confirmButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (playerNameInput.reportValidity()) {
+            const name = playerNameInput.value;
+            const shouldInitializePlayer1 = player1 === null;
+            if (shouldInitializePlayer1) {
+                player1 = new Player(name);
+                displayController.loadFormationScreen(
+                    player1.gameBoard.gridSize,
+                    () => onFormationScreenLoaded(true),
+                );
+            } else if (isHuman) {
+                player2 = new Player(name);
+                displayController.loadFormationScreen(
+                    player2.gameBoard.gridSize,
+                    () => onFormationScreenLoaded(false),
+                );
+            } else {
+                player2 = new AIPlayer(name);
+                displayController.loadMainScreen(
+                    player1,
+                    player2,
+                    onMainScreenLoaded,
+                );
+            }
+        }
+    });
+}
+
+// displayController.loadFormationScreen(
+//     player1.gameBoard.gridSize,
+//     onFormationScreenLoaded,
+// );
+
+displayController.loadPlayerInfoScreen(true, false, onPlayerInfoScreenLoaded);
