@@ -8,8 +8,6 @@ import { Ship } from './logic/ship.js';
 let turn = 1;
 const AIResponseLatencyMS = 0;
 const player1 = new Player('Player1');
-// player1.gameBoard.populate();
-
 const player2 = new AIPlayer();
 player2.gameBoard.populate();
 
@@ -20,11 +18,11 @@ function onGameOverDialogLoaded() {
         dialog.close();
         player1.gameBoard.resetBoard();
         player2.gameBoard.resetBoard();
-        player1.gameBoard.populate();
         player2.gameBoard.populate();
-        displayController.loadMainScreen(player1, player2, onMainScreenLoaded);
-        const player1BoardDiv = document.querySelector('div.board.player1');
-        player1BoardDiv.classList.add('revealed');
+        displayController.loadFormationScreen(
+            player1.gameBoard.gridSize,
+            onFormationScreenLoaded,
+        );
     });
 }
 function onMainScreenLoaded() {
