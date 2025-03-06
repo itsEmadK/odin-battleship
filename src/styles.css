@@ -126,8 +126,30 @@ div.formation-container {
 
 div.ships {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
+    align-content: center;
+}
+
+div.ships.horizontal {
+    align-content: center;
+    grid-template-columns: 1fr;
+    gap: 1.5em;
+}
+
+div.ships.horizontal .ship {
+    display: flex;
+    align-items: center;
+}
+
+div.ships.horizontal .ship-cell {
+    display: flex;
+    align-items: start;
+    border-bottom: solid black 2px;
+    border-right: none;
+}
+div.ships.horizontal .ship-cell:last-child {
+    border-right: solid black 2px;
 }
 
 div.ship-cell {

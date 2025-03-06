@@ -89,7 +89,7 @@ function onMainScreenLoaded() {
 }
 function onFormationScreenLoaded() {
     let selectedShipLength = 0;
-    let layHorizontally = true;
+    let layHorizontally = false;
     let shipsLaid = 0;
     let lastGrabbedShipCellNumber = null;
 
@@ -191,11 +191,13 @@ function onFormationScreenLoaded() {
     const yAxisButton = document.querySelector('button.y-axis');
     xAxisButton.addEventListener('click', () => {
         layHorizontally = true;
+        shipsContainer.classList.add('horizontal');
         xAxisButton.classList.add('selected');
         yAxisButton.classList.remove('selected');
     });
     yAxisButton.addEventListener('click', () => {
         layHorizontally = false;
+        shipsContainer.classList.remove('horizontal');
         yAxisButton.classList.add('selected');
         xAxisButton.classList.remove('selected');
     });
@@ -281,13 +283,16 @@ function onFormationScreenLoaded() {
             selectedShipLength = 0;
         }
     });
+    board.addEventListener('dragleave', () => {
+        clearAllHighlights();
+    });
 
     document.body.addEventListener('keyup', (e) => {
         if (document.body.querySelector('.formation-container')) {
             if (e.key.toLowerCase() === 'r') {
                 const originCell = document.querySelector('.cell.hover');
-
                 layHorizontally = !layHorizontally;
+                shipsContainer.classList.toggle('horizontal');
                 xAxisButton.classList.toggle('selected');
                 yAxisButton.classList.toggle('selected');
 
