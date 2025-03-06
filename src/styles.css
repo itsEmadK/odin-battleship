@@ -65,7 +65,7 @@ main {
     cursor: default;
 }
 
-.board.revealed .cell.occupied {
+.board.player1 .cell.occupied {
     background-color: var(--cell-bg-color-occupied);
 }
 
@@ -77,10 +77,14 @@ div.board .cell.attacked.occupied {
     background-color: var(--cell-bg-color-occupied-attacked);
 }
 
-.boards .cell:hover {
+div.board.player1 {
+    cursor: not-allowed;
+}
+
+.board.player2 .cell:hover {
     background-color: var(--cell-bg-color-hover);
 }
-.boards .cell:active {
+.board.player2 .cell:active {
     background-color: var(--cell-bg-color-active);
 }
 
