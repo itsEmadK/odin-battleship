@@ -13,6 +13,9 @@
     --cell-bg-color-non-occupied-attacked: cyan;
     --cell-bg-color-hover: rgb(206, 206, 181);
     --cell-bg-color-active: rgb(191, 191, 154);
+    --ship-cell-bg-color-hover: rgb(112, 166, 210);
+    --ship-cell-bg-color-selected: rgb(207, 225, 239);
+    --ship-cell-bg-color-placed: var(--cell-bg-color-occupied);
 }
 
 .cell {
@@ -21,9 +24,12 @@
 }
 
 .boards {
-    margin: 24px;
     display: flex;
     justify-content: space-around;
+}
+
+main {
+    padding: 1.5em;
 }
 
 .board {
@@ -48,10 +54,10 @@ div.board .cell.attacked.occupied {
     background-color: var(--cell-bg-color-occupied-attacked);
 }
 
-.cell:hover {
+.boards .cell:hover {
     background-color: var(--cell-bg-color-hover);
 }
-.cell:active {
+.boards .cell:active {
     background-color: var(--cell-bg-color-active);
 }
 
@@ -108,4 +114,39 @@ button.play-again:active {
 }
 button.play-again:focus {
     outline: none;
+}
+
+div.formation-container {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+}
+
+div.ships {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+div.ship-cell {
+    background-color: steelblue;
+    padding: 16px;
+    border: 2px solid black;
+    border-bottom: none;
+}
+
+.ships:not(:has(.ship.selected)) div.ship:hover .ship-cell {
+    background-color: var(--ship-cell-bg-color-hover);
+}
+
+div.ship.selected .ship-cell {
+    background-color: var(--ship-cell-bg-color-selected);
+}
+
+div.ship.placed .ship-cell {
+    background-color: var(--cell-bg-color-occupied);
+}
+
+div.ship-cell:last-child {
+    border-bottom: 2px solid black;
 }
