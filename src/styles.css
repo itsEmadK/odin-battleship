@@ -58,6 +58,7 @@ main {
 .board {
     display: grid;
     width: 350px;
+    margin-top: 1em;
     grid-template-columns: repeat(10, 1fr);
     height: auto;
     border: var(--board-border);
