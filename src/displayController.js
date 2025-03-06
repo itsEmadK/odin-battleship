@@ -76,6 +76,36 @@ const displayController = (function () {
         }
         const formationContainer = document.createElement('div');
         formationContainer.classList.add('formation-container');
+
+        const tipsContainer = document.createElement('ul');
+        tipsContainer.classList.add('tips');
+        const tip1 = document.createElement('li');
+        tip1.classList.add('tip');
+        tip1.innerText =
+            'Click on a ship to select it and then choose a cell on the grid to place it.';
+        const tip2 = document.createElement('li');
+        tip2.classList.add('tip');
+        tip2.innerText =
+            'Alternatively, you can drag a ship and then drop it on the board.';
+        const tip3 = document.createElement('li');
+        tip3.classList.add('tip');
+        tip3.innerText =
+            'Click on the axis buttons to change the direction in which you ship is going to be placed.';
+        const tip4 = document.createElement('li');
+        tip4.classList.add('tip');
+        tip4.innerText =
+            'Alternatively, you can press "R" on you keyboard to toggle between the two axis.';
+        const tip5 = document.createElement('li');
+        tip5.classList.add('tip');
+        tip5.innerText =
+            'Once you have placed all of your five ships, you can click confirm to save it.';
+        tipsContainer.appendChild(tip1);
+        tipsContainer.appendChild(tip2);
+        tipsContainer.appendChild(tip3);
+        tipsContainer.appendChild(tip4);
+        tipsContainer.appendChild(tip5);
+        formationContainer.appendChild(tipsContainer);
+
         const boardGridDiv = document.createElement('div');
         const boardContainerDiv = document.createElement('div');
         boardGridDiv.classList.add('board');
