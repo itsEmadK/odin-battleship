@@ -70,11 +70,11 @@ main {
     background-color: var(--cell-bg-color-occupied);
 }
 
-div.board .cell.attacked {
+:root div.board div.cell.attacked {
     background-color: var(--cell-bg-color-non-occupied-attacked);
 }
 
-div.board .cell.attacked.occupied {
+div.board div.cell.attacked.occupied {
     background-color: var(--cell-bg-color-occupied-attacked);
 }
 
