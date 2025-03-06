@@ -2,6 +2,7 @@ import { Player } from './logic/player.js';
 import { AIPlayer } from './logic/ai-player.js';
 import { displayController } from './displayController.js';
 import './styles.css';
+import { GameBoard } from './logic/game-board.js';
 
 let turn = 1;
 const AIResponseLatencyMS = 0;
@@ -109,6 +110,34 @@ function onFormationScreenLoaded() {
                 shipDiv.classList.add('selected');
                 selectedShipLength = +shipDiv.dataset.length;
             }
+        });
+    });
+
+    const board = document.querySelector('.formation-container .board');
+    board.addEventListener('mouseover', (e) => {
+        if (e.target.classList.contains('cell')) {
+            board.childNodes.forEach((node) => {
+                node.classList.remove('hover');
+            });
+            const x = +e.target.dataset.x;
+            const y = +e.target.dataset.y;
+            const cellsAffected = GameBoard.findCellsAffectedByShipIfLaid(
+                x,
+                y,
+                selectedShipLength,
+                layHorizontally,
+            );
+            cellsAffected.forEach((affectedCell) => {
+                const node = document.querySelector(
+                    `[data-x="${affectedCell.x}"][data-y="${affectedCell.y}"]`,
+                );
+                node.classList.add('hover');
+            });
+        }
+    });
+    board.addEventListener('mouseleave', () => {
+        board.childNodes.forEach((node) => {
+            node.classList.remove('hover');
         });
     });
 }
