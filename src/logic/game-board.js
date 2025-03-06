@@ -136,16 +136,32 @@ class GameBoard {
     }
 
     populate() {
-        const ship1 = new Ship(2);
-        const ship2 = new Ship(3);
-        const ship3 = new Ship(3);
-        const ship4 = new Ship(4);
-        const ship5 = new Ship(5);
-        this.placeShipHorizontally(ship1, 0, 0);
-        this.placeShipHorizontally(ship2, 7, 3);
-        this.placeShipVertically(ship3, 2, 4);
-        this.placeShipVertically(ship4, 4, 4);
-        this.placeShipHorizontally(ship5, 0, 9);
+        const ships = [
+            new Ship(2),
+            new Ship(3),
+            new Ship(3),
+            new Ship(4),
+            new Ship(5),
+        ];
+        while (ships.length > 0) {
+            const randomX = Math.floor(Math.random() * this.gridSize);
+            const randomY = Math.floor(Math.random() * this.gridSize);
+            const layHorizontally = Math.random() > 0.5;
+            const possibleToPlace = this.isPossibleToPlaceShip(
+                randomX,
+                randomY,
+                ships[0].length,
+                layHorizontally,
+            );
+
+            if (possibleToPlace) {
+                if (layHorizontally) {
+                    this.placeShipHorizontally(ships.shift(), randomX, randomY);
+                } else {
+                    this.placeShipVertically(ships.shift(), randomX, randomY);
+                }
+            }
+        }
     }
 
     /**

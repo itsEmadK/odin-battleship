@@ -465,31 +465,6 @@ describe('areAllShipsSunk method', () => {
     });
 });
 
-describe('populate method', () => {
-    test('exists', () => {
-        const gb = new GameBoard();
-        expect(gb.populate).toBeDefined();
-    });
-
-    test('populates the board with the default layout', () => {
-        const testGB = new GameBoard();
-        const ship1 = new Ship(2);
-        const ship2 = new Ship(3);
-        const ship3 = new Ship(3);
-        const ship4 = new Ship(4);
-        const ship5 = new Ship(5);
-        testGB.placeShipHorizontally(ship1, 0, 0);
-        testGB.placeShipHorizontally(ship2, 7, 3);
-        testGB.placeShipVertically(ship3, 2, 4);
-        testGB.placeShipVertically(ship4, 4, 4);
-        testGB.placeShipHorizontally(ship5, 0, 9);
-
-        const gb = new GameBoard();
-        gb.populate();
-        expect(gb.board).toEqual(testGB.board);
-    });
-});
-
 describe('findCellsOccupiedByShipInCell method', () => {
     test('exists', () => {
         const gb = new GameBoard();
