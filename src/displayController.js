@@ -142,12 +142,33 @@ const displayController = (function () {
         onLoaded();
     }
 
+    function renderFormationBoard(board) {
+        const boardGridDiv = document.querySelector(
+            `.formation-container .board`,
+        );
+        boardGridDiv.innerHTML = '';
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board.length; j++) {
+                const { ship } = board[i][j];
+                const cellDiv = document.createElement('div');
+                cellDiv.classList.add('cell');
+                cellDiv.dataset.x = j;
+                cellDiv.dataset.y = i;
+                if (ship !== null) {
+                    cellDiv.classList.add('occupied');
+                }
+                boardGridDiv.appendChild(cellDiv);
+            }
+        }
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
         loadMainScreen,
         loadGameOverDialog,
         loadFormationScreen,
+        renderFormationBoard,
     };
 })();
 
