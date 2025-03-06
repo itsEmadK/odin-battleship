@@ -24,13 +24,16 @@ const handlePlayer1sWin = () => {
     player1.score++;
     const h3 = dialog.querySelector('h3');
     h3.innerText = 'You won!';
+    dialog.classList.remove('loss');
+    dialog.classList.add('win');
     dialog.showModal();
 };
-
 const handlePlayer2sWin = () => {
     player2.score++;
     const h3 = dialog.querySelector('h3');
     h3.innerText = 'You lost :(';
+    dialog.classList.remove('win');
+    dialog.classList.add('loss');
     dialog.showModal();
 };
 
