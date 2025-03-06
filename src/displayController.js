@@ -77,6 +77,7 @@ const displayController = (function () {
         const formationContainer = document.createElement('div');
         formationContainer.classList.add('formation-container');
         const boardGridDiv = document.createElement('div');
+        const boardContainerDiv = document.createElement('div');
         boardGridDiv.classList.add('board');
         for (let i = 0; i < boardGridSize; i++) {
             for (let j = 0; j < boardGridSize; j++) {
@@ -87,7 +88,14 @@ const displayController = (function () {
                 boardGridDiv.appendChild(cellDiv);
             }
         }
-        formationContainer.appendChild(boardGridDiv);
+
+        boardContainerDiv.appendChild(boardGridDiv);
+        const confirmButton = document.createElement('button');
+        confirmButton.classList.add('confirm');
+        confirmButton.innerText = 'Confirm';
+        boardContainerDiv.appendChild(confirmButton);
+
+        formationContainer.appendChild(boardContainerDiv);
 
         const shipsContainer = document.createElement('div');
         shipsContainer.classList.add('ships');
@@ -138,6 +146,7 @@ const displayController = (function () {
         shipsContainer.appendChild(ship2);
         shipsContainer.appendChild(ship1);
         formationContainer.appendChild(shipsContainer);
+
         main.appendChild(formationContainer);
         onLoaded();
     }

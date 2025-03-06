@@ -92,6 +92,7 @@ function onMainScreenLoaded() {
 function onFormationScreenLoaded() {
     let selectedShipLength = 0;
     let layHorizontally = true;
+    let shipsLaid = 0;
     const shipsContainer = document.querySelector('.ships');
     const shipDivs = document.querySelectorAll('.ship');
     shipDivs.forEach((shipDiv) => {
@@ -115,6 +116,17 @@ function onFormationScreenLoaded() {
                 }
             }
         });
+    });
+
+    const confirmButton = document.querySelector('button.confirm');
+    confirmButton.addEventListener('click', () => {
+        if (shipsLaid === 5) {
+            displayController.loadMainScreen(
+                player1,
+                player2,
+                onMainScreenLoaded,
+            );
+        }
     });
 
     const board = document.querySelector('.formation-container .board');
@@ -186,6 +198,10 @@ function onFormationScreenLoaded() {
                     shipsContainer.querySelector('.ship.selected').classList;
                 selectedShipDiv.remove('selected');
                 selectedShipDiv.add('placed');
+                shipsLaid++;
+                if (shipsLaid === 5) {
+                    confirmButton.classList.add('enabled');
+                }
                 selectedShipLength = 0;
                 displayController.renderFormationBoard(player1.gameBoard.board);
             }
