@@ -3,11 +3,12 @@ import { AIPlayer } from './logic/ai-player.js';
 import { displayController } from './displayController.js';
 import './styles.css';
 import { GameBoard } from './logic/game-board.js';
+import { Ship } from './logic/ship.js';
 
 let turn = 1;
 const AIResponseLatencyMS = 0;
 const player1 = new Player('Player1');
-player1.gameBoard.populate();
+// player1.gameBoard.populate();
 
 const player2 = new AIPlayer();
 player2.gameBoard.populate();
@@ -95,21 +96,23 @@ function onFormationScreenLoaded() {
     const shipDivs = document.querySelectorAll('.ship');
     shipDivs.forEach((shipDiv) => {
         shipDiv.addEventListener('click', () => {
-            const isPlacing = shipsContainer.classList.contains('placing');
-            if (!isPlacing) {
-                shipDiv.classList.add('selected');
-                selectedShipLength = +shipDiv.dataset.length;
-                shipsContainer.classList.add('placing');
-            } else if (shipDiv.classList.contains('selected')) {
-                shipDiv.classList.remove('selected');
-                selectedShipLength = 0;
-                shipsContainer.classList.remove('placing');
-            } else {
-                shipDivs.forEach((sd) => {
-                    sd.classList.remove('selected');
-                });
-                shipDiv.classList.add('selected');
-                selectedShipLength = +shipDiv.dataset.length;
+            if (!shipDiv.classList.contains('placed')) {
+                const isPlacing = shipsContainer.classList.contains('placing');
+                if (!isPlacing) {
+                    shipDiv.classList.add('selected');
+                    selectedShipLength = +shipDiv.dataset.length;
+                    shipsContainer.classList.add('placing');
+                } else if (shipDiv.classList.contains('selected')) {
+                    shipDiv.classList.remove('selected');
+                    selectedShipLength = 0;
+                    shipsContainer.classList.remove('placing');
+                } else {
+                    shipDivs.forEach((sd) => {
+                        sd.classList.remove('selected');
+                    });
+                    shipDiv.classList.add('selected');
+                    selectedShipLength = +shipDiv.dataset.length;
+                }
             }
         });
     });
@@ -162,9 +165,34 @@ function onFormationScreenLoaded() {
             node.classList.remove('na');
         });
     });
+    board.addEventListener('click', (e) => {
+        if (e.target.classList.contains('cell') && selectedShipLength > 0) {
+            const x = +e.target.dataset.x;
+            const y = +e.target.dataset.y;
+            const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+                x,
+                y,
+                selectedShipLength,
+                layHorizontally,
+            );
+            if (possibleToPlace) {
+                const ship = new Ship(selectedShipLength);
+                if (layHorizontally) {
+                    player1.gameBoard.placeShipHorizontally(ship, x, y);
+                } else {
+                    player1.gameBoard.placeShipVertically(ship, x, y);
+                }
+                const selectedShipDiv =
+                    shipsContainer.querySelector('.ship.selected').classList;
+                selectedShipDiv.remove('selected');
+                selectedShipDiv.add('placed');
+                selectedShipLength = 0;
+                displayController.renderFormationBoard(player1.gameBoard.board);
+            }
+        }
+    });
 }
 
-displayController.loadMainScreen(player1, player2, onMainScreenLoaded);
 displayController.loadFormationScreen(
     player1.gameBoard.gridSize,
     onFormationScreenLoaded,

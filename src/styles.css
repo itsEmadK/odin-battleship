@@ -137,7 +137,7 @@ div.ship-cell {
     border-bottom: none;
 }
 
-.ships:not(:has(.ship.selected)) div.ship:hover .ship-cell {
+.ships:not(:has(.ship.selected)) div.ship:not(.placed):hover .ship-cell {
     background-color: var(--ship-cell-bg-color-hover);
 }
 
@@ -159,4 +159,8 @@ div.formation-container .cell.hover {
 
 div.formation-container .cell.hover.na {
     background-color: var(--formation-board-cell-bg-color-hovered-na);
+}
+
+div.formation-container .board .cell.occupied {
+    background-color: var(--cell-bg-color-occupied);
 }
