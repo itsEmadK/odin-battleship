@@ -176,7 +176,7 @@ function onFormationScreenLoaded(isPlayer1) {
 
     const confirmButton = document.querySelector('button.confirm');
     confirmButton.addEventListener('click', () => {
-        if (shipsLaid === 1) {
+        if (shipsLaid === 5) {
             if (isPlayer1) {
                 const shouldInitializePlayer2 = player2 === null;
                 if (shouldInitializePlayer2) {
@@ -227,7 +227,7 @@ function onFormationScreenLoaded(isPlayer1) {
             selectedShipDiv.classList.remove('selected');
             selectedShipDiv.classList.add('placed');
             shipsLaid++;
-            if (shipsLaid === 1) {
+            if (shipsLaid === 5) {
                 confirmButton.classList.add('enabled');
             }
             selectedShipLength = 0;
