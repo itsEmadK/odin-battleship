@@ -210,10 +210,7 @@ class GameBoard {
         );
         let possible = true;
         cellsAffected.forEach((cell) => {
-            if (
-                !this.isCellInsideBoard(cell.x, cell.y) ||
-                this.board[cell.y][cell.x].ship !== null
-            ) {
+            if (!this.isCellInsideBoard(cell.x, cell.y)) {
                 possible = false;
             }
         });
