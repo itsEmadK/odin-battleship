@@ -44,8 +44,19 @@ const displayController = (function () {
         player1BoardDiv.classList.add('board', 'player1');
         const player2BoardDiv = document.createElement('div');
         player2BoardDiv.classList.add('board', 'player2');
+
+        const p1ScorePara = document.createElement('p');
+        p1ScorePara.innerText = `Your score: ${player1.score}`;
+        p1ScorePara.classList.add('score', 'player1');
+        const p2ScorePara = document.createElement('p');
+        p2ScorePara.innerText = `Enemy's score: ${player2.score}`;
+        p2ScorePara.classList.add('score', 'player2');
+
+        boardsContainer.appendChild(p1ScorePara);
+        boardsContainer.appendChild(p2ScorePara);
         boardsContainer.appendChild(player1BoardDiv);
         boardsContainer.appendChild(player2BoardDiv);
+
         main.appendChild(boardsContainer);
         renderPlayer1Board(player1.gameBoard.board);
         renderPlayer2Board(player2.gameBoard.board);

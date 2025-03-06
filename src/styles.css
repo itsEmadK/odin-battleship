@@ -31,12 +31,28 @@ body {
 }
 
 .boards {
-    display: flex;
-    justify-content: space-around;
+    padding-top: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
 }
 
 main {
     padding: 1.5em;
+}
+
+.score {
+    font-weight: 600;
+    font-size: 1.2rem;
+    justify-self: center;
+}
+
+.score.player1 {
+    color: rgb(156, 233, 156);
+}
+.score.player2 {
+    color: rgb(223, 119, 119);
 }
 
 .board {
