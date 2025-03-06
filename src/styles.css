@@ -144,8 +144,10 @@ button.play-again:focus {
 }
 
 div.formation-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
+    justify-items: center;
     gap: 3em;
 }
 
@@ -154,6 +156,7 @@ ul.tips {
     text-align: start;
     justify-items: start;
     margin-top: 3em;
+    justify-self: end;
     margin-bottom: 3em;
 }
 
@@ -169,6 +172,7 @@ div.ships {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
+    justify-self: start;
     align-content: center;
 }
 
