@@ -102,6 +102,7 @@ function onFormationScreenLoaded() {
                 shipsContainer.classList.add('placing');
             } else if (shipDiv.classList.contains('selected')) {
                 shipDiv.classList.remove('selected');
+                selectedShipLength = 0;
                 shipsContainer.classList.remove('placing');
             } else {
                 shipDivs.forEach((sd) => {
