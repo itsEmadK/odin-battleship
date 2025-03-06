@@ -119,6 +119,7 @@ function onFormationScreenLoaded() {
         if (e.target.classList.contains('cell')) {
             board.childNodes.forEach((node) => {
                 node.classList.remove('hover');
+                node.classList.remove('na');
             });
             const x = +e.target.dataset.x;
             const y = +e.target.dataset.y;
@@ -128,17 +129,37 @@ function onFormationScreenLoaded() {
                 selectedShipLength,
                 layHorizontally,
             );
+
+            const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+                x,
+                y,
+                selectedShipLength,
+                layHorizontally,
+            );
+
             cellsAffected.forEach((affectedCell) => {
-                const node = document.querySelector(
-                    `[data-x="${affectedCell.x}"][data-y="${affectedCell.y}"]`,
-                );
-                node.classList.add('hover');
+                if (
+                    player1.gameBoard.isCellInsideBoard(
+                        affectedCell.x,
+                        affectedCell.y,
+                    )
+                ) {
+                    const node = document.querySelector(
+                        `[data-x="${affectedCell.x}"][data-y="${affectedCell.y}"]`,
+                    );
+                    if (possibleToPlace) {
+                        node.classList.add('hover');
+                    } else {
+                        node.classList.add('hover', 'na');
+                    }
+                }
             });
         }
     });
     board.addEventListener('mouseleave', () => {
         board.childNodes.forEach((node) => {
             node.classList.remove('hover');
+            node.classList.remove('na');
         });
     });
 }
