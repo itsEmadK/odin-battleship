@@ -26,10 +26,16 @@ function onGameOverDialogLoaded() {
 function onMainScreenLoaded() {
     const handlePlayer1sWin = () => {
         player1.score++;
-        displayController.loadGameOverDialog('You won!', () => {
+        const title =
+            player2 instanceof AIPlayer
+                ? 'You won!'
+                : `${player1.name} beat ${player2.name}`;
+        displayController.loadGameOverDialog(title, () => {
             const dialog = document.querySelector('dialog.game-over');
-            dialog.classList.remove('loss');
-            dialog.classList.add('win');
+            if (player2 instanceof AIPlayer) {
+                dialog.classList.remove('loss');
+                dialog.classList.add('win');
+            }
             onGameOverDialogLoaded();
         });
     };
@@ -170,7 +176,7 @@ function onFormationScreenLoaded(isPlayer1) {
 
     const confirmButton = document.querySelector('button.confirm');
     confirmButton.addEventListener('click', () => {
-        if (shipsLaid === 5) {
+        if (shipsLaid === 1) {
             if (isPlayer1) {
                 const shouldInitializePlayer2 = player2 === null;
                 if (shouldInitializePlayer2) {
@@ -221,7 +227,7 @@ function onFormationScreenLoaded(isPlayer1) {
             selectedShipDiv.classList.remove('selected');
             selectedShipDiv.classList.add('placed');
             shipsLaid++;
-            if (shipsLaid === 5) {
+            if (shipsLaid === 1) {
                 confirmButton.classList.add('enabled');
             }
             selectedShipLength = 0;
