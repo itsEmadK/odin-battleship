@@ -164,3 +164,30 @@ div.formation-container .cell.hover.na {
 div.formation-container .board .cell.occupied {
     background-color: var(--cell-bg-color-occupied);
 }
+
+main {
+    text-align: center;
+}
+
+button.confirm {
+    margin-top: 1em;
+    padding: 6px 12px;
+    appearance: none;
+    border: 2px solid black;
+    font-size: 1rem;
+    border-radius: 4px;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.confirm.enabled {
+    opacity: 1;
+    cursor: pointer;
+}
+
+button.confirm.enabled:hover {
+    background-color: rgb(219, 219, 219);
+}
+button.confirm.enabled:active {
+    background-color: rgb(206, 206, 206);
+}
