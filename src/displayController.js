@@ -89,6 +89,18 @@ const displayController = (function () {
             }
         }
 
+        const axisButtonsContainer = document.createElement('div');
+        axisButtonsContainer.classList.add('axis');
+        const xAxisButton = document.createElement('button');
+        xAxisButton.classList.add('x-axis');
+        xAxisButton.innerText = 'X-Axis';
+        const yAxisButton = document.createElement('button');
+        yAxisButton.classList.add('y-axis');
+        yAxisButton.innerText = 'Y-Axis';
+        axisButtonsContainer.appendChild(xAxisButton);
+        axisButtonsContainer.appendChild(yAxisButton);
+        boardContainerDiv.appendChild(axisButtonsContainer);
+
         boardContainerDiv.appendChild(boardGridDiv);
         const confirmButton = document.createElement('button');
         confirmButton.classList.add('confirm');
