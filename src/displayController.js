@@ -117,38 +117,47 @@ const displayController = (function () {
 
         const ship1 = document.createElement('div');
         ship1.classList.add('ship');
+        ship1.setAttribute('draggable', 'true');
         ship1.dataset.length = 2;
 
         const ship2 = document.createElement('div');
         ship2.classList.add('ship');
+        ship2.setAttribute('draggable', 'true');
         ship2.dataset.length = 3;
 
         const ship3 = document.createElement('div');
         ship3.classList.add('ship');
+        ship3.setAttribute('draggable', 'true');
         ship3.dataset.length = 3;
 
         const ship4 = document.createElement('div');
         ship4.classList.add('ship');
+        ship4.setAttribute('draggable', 'true');
         ship4.dataset.length = 4;
 
         const ship5 = document.createElement('div');
         ship5.classList.add('ship');
+        ship5.setAttribute('draggable', 'true');
         ship5.dataset.length = 5;
 
         const shipCell = document.createElement('div');
         shipCell.classList.add('ship-cell');
 
         for (let i = 0; i < 2; i++) {
+            shipCell.dataset.i = i;
             ship1.appendChild(shipCell.cloneNode(true));
         }
         for (let i = 0; i < 3; i++) {
+            shipCell.dataset.i = i;
             ship2.appendChild(shipCell.cloneNode(true));
             ship3.appendChild(shipCell.cloneNode(true));
         }
         for (let i = 0; i < 4; i++) {
+            shipCell.dataset.i = i;
             ship4.appendChild(shipCell.cloneNode(true));
         }
         for (let i = 0; i < 5; i++) {
+            shipCell.dataset.i = i;
             ship5.appendChild(shipCell.cloneNode(true));
         }
 

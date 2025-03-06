@@ -91,7 +91,25 @@ function onFormationScreenLoaded() {
     let selectedShipLength = 0;
     let layHorizontally = true;
     let shipsLaid = 0;
+    let lastGrabbedShipCellNumber = null;
+
+    const board = document.querySelector('.formation-container .board');
+    const clearAllHighlights = () => {
+        board.childNodes.forEach((node) => {
+            node.classList.remove('hover');
+            node.classList.remove('na');
+        });
+    };
+
     const shipsContainer = document.querySelector('.ships');
+    shipsContainer.addEventListener('mouseover', (e) => {
+        if (e.target.classList.contains('ship-cell')) {
+            lastGrabbedShipCellNumber = e.target;
+        } else {
+            lastGrabbedShipCellNumber = null;
+        }
+    });
+
     const shipDivs = document.querySelectorAll('.ship');
     shipDivs.forEach((shipDiv) => {
         shipDiv.addEventListener('click', () => {
@@ -114,6 +132,21 @@ function onFormationScreenLoaded() {
                 }
             }
         });
+        shipDiv.addEventListener('dragstart', (e) => {
+            if (selectedShipLength === 0) {
+                shipDiv.classList.add('selected');
+                selectedShipLength = +shipDiv.dataset.length;
+                lastGrabbedShipCellNumber =
+                    +lastGrabbedShipCellNumber.dataset.i;
+            } else {
+                e.preventDefault();
+            }
+        });
+        shipDiv.addEventListener('dragend', () => {
+            shipDiv.classList.remove('selected');
+            selectedShipLength = 0;
+            clearAllHighlights();
+        });
     });
 
     const confirmButton = document.querySelector('button.confirm');
@@ -126,6 +159,33 @@ function onFormationScreenLoaded() {
             );
         }
     });
+
+    const placeShipOnBoard = (x, y) => {
+        const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
+            x,
+            y,
+            selectedShipLength,
+            layHorizontally,
+        );
+        if (possibleToPlace) {
+            const ship = new Ship(selectedShipLength);
+            if (layHorizontally) {
+                player1.gameBoard.placeShipHorizontally(ship, x, y);
+            } else {
+                player1.gameBoard.placeShipVertically(ship, x, y);
+            }
+            const selectedShipDiv =
+                shipsContainer.querySelector('.ship.selected');
+            selectedShipDiv.classList.remove('selected');
+            selectedShipDiv.classList.add('placed');
+            shipsLaid++;
+            if (shipsLaid === 5) {
+                confirmButton.classList.add('enabled');
+            }
+            selectedShipLength = 0;
+            displayController.renderFormationBoard(player1.gameBoard.board);
+        }
+    };
 
     const xAxisButton = document.querySelector('button.x-axis');
     const yAxisButton = document.querySelector('button.y-axis');
@@ -173,13 +233,6 @@ function onFormationScreenLoaded() {
             }
         });
     };
-    const board = document.querySelector('.formation-container .board');
-    const clearAllHighlights = () => {
-        board.childNodes.forEach((node) => {
-            node.classList.remove('hover');
-            node.classList.remove('na');
-        });
-    };
 
     board.addEventListener('mouseover', (e) => {
         if (e.target.classList.contains('cell')) {
@@ -199,30 +252,33 @@ function onFormationScreenLoaded() {
         if (e.target.classList.contains('cell') && selectedShipLength > 0) {
             const x = +e.target.dataset.x;
             const y = +e.target.dataset.y;
-            const possibleToPlace = player1.gameBoard.isPossibleToPlaceShip(
-                x,
-                y,
-                selectedShipLength,
-                layHorizontally,
-            );
-            if (possibleToPlace) {
-                const ship = new Ship(selectedShipLength);
-                if (layHorizontally) {
-                    player1.gameBoard.placeShipHorizontally(ship, x, y);
-                } else {
-                    player1.gameBoard.placeShipVertically(ship, x, y);
-                }
-                const selectedShipDiv =
-                    shipsContainer.querySelector('.ship.selected').classList;
-                selectedShipDiv.remove('selected');
-                selectedShipDiv.add('placed');
-                shipsLaid++;
-                if (shipsLaid === 5) {
-                    confirmButton.classList.add('enabled');
-                }
-                selectedShipLength = 0;
-                displayController.renderFormationBoard(player1.gameBoard.board);
-            }
+            placeShipOnBoard(x, y);
+        }
+    });
+    board.addEventListener('dragover', (e) => {
+        const node = e.target;
+        e.preventDefault();
+        clearAllHighlights();
+        const x = +node.dataset.x;
+        const y = +node.dataset.y;
+        if (layHorizontally) {
+            highLightAffectedCells(x - lastGrabbedShipCellNumber, y);
+        } else {
+            highLightAffectedCells(x, y - lastGrabbedShipCellNumber);
+        }
+    });
+    board.addEventListener('drop', (e) => {
+        const node = e.target;
+        e.preventDefault();
+        clearAllHighlights();
+        const x = +node.dataset.x;
+        const y = +node.dataset.y;
+        if (layHorizontally) {
+            placeShipOnBoard(x - lastGrabbedShipCellNumber, y);
+            selectedShipLength = 0;
+        } else {
+            placeShipOnBoard(x, y - lastGrabbedShipCellNumber);
+            selectedShipLength = 0;
         }
     });
 
