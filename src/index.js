@@ -127,6 +127,19 @@ function onFormationScreenLoaded() {
         }
     });
 
+    const xAxisButton = document.querySelector('button.x-axis');
+    const yAxisButton = document.querySelector('button.y-axis');
+    xAxisButton.addEventListener('click', () => {
+        layHorizontally = true;
+        xAxisButton.classList.add('selected');
+        yAxisButton.classList.remove('selected');
+    });
+    yAxisButton.addEventListener('click', () => {
+        layHorizontally = false;
+        yAxisButton.classList.add('selected');
+        xAxisButton.classList.remove('selected');
+    });
+
     const board = document.querySelector('.formation-container .board');
     board.addEventListener('mouseover', (e) => {
         if (e.target.classList.contains('cell')) {
