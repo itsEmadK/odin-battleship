@@ -69,11 +69,85 @@ const displayController = (function () {
         onLoaded();
     }
 
+    function loadFormationScreen(boardGridSize, onLoaded) {
+        const main = document.querySelector('main');
+        if (main.innerHTML) {
+            main.innerHTML = '';
+        }
+        const formationContainer = document.createElement('div');
+        formationContainer.classList.add('formation-container');
+        const boardGridDiv = document.createElement('div');
+        boardGridDiv.classList.add('board');
+        for (let i = 0; i < boardGridSize; i++) {
+            for (let j = 0; j < boardGridSize; j++) {
+                const cellDiv = document.createElement('div');
+                cellDiv.classList.add('cell');
+                cellDiv.dataset.x = j;
+                cellDiv.dataset.y = i;
+                boardGridDiv.appendChild(cellDiv);
+            }
+        }
+        formationContainer.appendChild(boardGridDiv);
+
+        const shipsContainer = document.createElement('div');
+        shipsContainer.classList.add('ships');
+        const shipSize2Container1 = document.createElement('div');
+        shipSize2Container1.classList.add('ship');
+        shipSize2Container1.dataset.length = 2;
+
+        const ship1 = document.createElement('div');
+        ship1.classList.add('ship');
+        ship1.dataset.length = 2;
+
+        const ship2 = document.createElement('div');
+        ship2.classList.add('ship');
+        ship2.dataset.length = 3;
+
+        const ship3 = document.createElement('div');
+        ship3.classList.add('ship');
+        ship3.dataset.length = 3;
+
+        const ship4 = document.createElement('div');
+        ship4.classList.add('ship');
+        ship4.dataset.length = 4;
+
+        const ship5 = document.createElement('div');
+        ship5.classList.add('ship');
+        ship5.dataset.length = 5;
+
+        const shipCell = document.createElement('div');
+        shipCell.classList.add('ship-cell');
+
+        for (let i = 0; i < 2; i++) {
+            ship1.appendChild(shipCell.cloneNode(true));
+        }
+        for (let i = 0; i < 3; i++) {
+            ship2.appendChild(shipCell.cloneNode(true));
+            ship3.appendChild(shipCell.cloneNode(true));
+        }
+        for (let i = 0; i < 4; i++) {
+            ship4.appendChild(shipCell.cloneNode(true));
+        }
+        for (let i = 0; i < 5; i++) {
+            ship5.appendChild(shipCell.cloneNode(true));
+        }
+
+        shipsContainer.appendChild(ship5);
+        shipsContainer.appendChild(ship4);
+        shipsContainer.appendChild(ship3);
+        shipsContainer.appendChild(ship2);
+        shipsContainer.appendChild(ship1);
+        formationContainer.appendChild(shipsContainer);
+        main.appendChild(formationContainer);
+        onLoaded();
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
         loadMainScreen,
         loadGameOverDialog,
+        loadFormationScreen,
     };
 })();
 
