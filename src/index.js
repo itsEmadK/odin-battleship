@@ -6,7 +6,7 @@ import { GameBoard } from './logic/game-board.js';
 import { Ship } from './logic/ship.js';
 
 let turn = 1;
-const AIResponseLatencyMS = 0;
+const AIResponseLatencyMS = 500;
 let player1 = null;
 let player2 = null;
 // player2.gameBoard.populate();
