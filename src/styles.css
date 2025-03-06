@@ -191,3 +191,38 @@ button.confirm.enabled:hover {
 button.confirm.enabled:active {
     background-color: rgb(206, 206, 206);
 }
+
+button.x-axis,
+button.y-axis {
+    appearance: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: 12px;
+    border: 2px solid black;
+}
+
+button.x-axis {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+button.y-axis {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+}
+
+button.x-axis.selected,
+button.y-axis.selected {
+    background-color: rgb(154, 203, 243);
+}
+
+button.x-axis:not(.selected):hover,
+button.y-axis:not(.selected):hover {
+    background-color: rgb(204, 210, 217);
+}
+
+button.x-axis:not(.selected):active,
+button.y-axis:not(.selected):active {
+    background-color: rgb(185, 199, 211);
+}
