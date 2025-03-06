@@ -52,10 +52,28 @@ const displayController = (function () {
         onLoaded();
     }
 
+    function loadGameOverDialog(title, onLoaded) {
+        const dialog = document.createElement('dialog');
+        dialog.classList.add('game-over');
+        const div = document.createElement('div');
+        const h3 = document.createElement('h3');
+        h3.innerText = title;
+        const playAgainButton = document.createElement('button');
+        playAgainButton.classList.add('play-again');
+        playAgainButton.innerText = 'Play Again';
+        div.appendChild(h3);
+        div.appendChild(playAgainButton);
+        dialog.appendChild(div);
+        document.querySelector('main').appendChild(dialog);
+        dialog.showModal();
+        onLoaded();
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
         loadMainScreen,
+        loadGameOverDialog,
     };
 })();
 
