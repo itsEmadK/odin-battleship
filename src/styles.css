@@ -160,6 +160,10 @@ div.ships.horizontal .ship {
     align-items: center;
 }
 
+div.ships.horizontal .ship {
+    justify-self: start;
+}
+
 div.ships.horizontal .ship-cell {
     display: flex;
     align-items: start;
@@ -168,6 +172,10 @@ div.ships.horizontal .ship-cell {
 }
 div.ships.horizontal .ship-cell:last-child {
     border-right: solid black 2px;
+}
+
+div.ship {
+    align-self: start;
 }
 
 div.ship-cell {
