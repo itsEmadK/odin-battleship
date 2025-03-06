@@ -233,6 +233,51 @@ const displayController = (function () {
         }
     }
 
+    function loadPlayerInfoScreen(isPlayer1, canBeAI, onLoaded) {
+        const main = document.querySelector('main');
+        if (main.innerHTML) {
+            main.innerHTML = '';
+        }
+        const form = document.createElement('form');
+        form.classList.add('player-info');
+        const formTitleH3 = document.createElement('h3');
+        formTitleH3.innerText = `Enter ${isPlayer1 ? 'first player' : 'second player'}'s info`;
+        const nameInput = document.createElement('input');
+        nameInput.id = 'player-name';
+        nameInput.required = true;
+        nameInput.placeholder = 'Name';
+        if (isPlayer1) {
+            nameInput.value = 'Player1';
+        } else {
+            nameInput.value = 'Player2';
+        }
+
+        form.appendChild(formTitleH3);
+        if (canBeAI) {
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.classList.add('player-types');
+            const humanButton = document.createElement('button');
+            humanButton.type = 'button';
+            humanButton.classList.add('human', 'selected');
+            humanButton.innerText = 'Human';
+            const AIButton = document.createElement('button');
+            AIButton.type = 'button';
+            AIButton.classList.add('ai');
+            AIButton.innerText = 'Computer';
+            buttonsContainer.appendChild(humanButton);
+            buttonsContainer.appendChild(AIButton);
+            form.appendChild(buttonsContainer);
+        }
+        form.appendChild(nameInput);
+
+        const confirmButton = document.createElement('button');
+        confirmButton.classList.add('confirm-form');
+        confirmButton.innerText = 'Next';
+        form.appendChild(confirmButton);
+        main.appendChild(form);
+        onLoaded();
+    }
+
     return {
         renderPlayer1Board,
         renderPlayer2Board,
@@ -240,6 +285,7 @@ const displayController = (function () {
         loadGameOverDialog,
         loadFormationScreen,
         renderFormationBoard,
+        loadPlayerInfoScreen,
     };
 })();
 
