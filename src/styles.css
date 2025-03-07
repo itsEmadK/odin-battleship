@@ -174,11 +174,11 @@ div.ships {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
     justify-self: start;
-    align-content: center;
+    align-content: start;
+    margin-top: 4em;
 }
 
 div.ships.horizontal {
-    align-content: center;
     grid-template-columns: 1fr;
     gap: 1.5em;
 }
