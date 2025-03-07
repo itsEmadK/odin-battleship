@@ -9,6 +9,7 @@ let turn = 1;
 const AIResponseLatencyMS = 500;
 let player1 = null;
 let player2 = null;
+let isProcessingAI = false;
 // player2.gameBoard.populate();
 
 function onGameOverDialogLoaded() {
@@ -50,6 +51,7 @@ function onMainScreenLoaded() {
         });
     };
     const playAITurn = () => {
+        isProcessingAI = true;
         const delay = new Promise((resolve) => {
             setTimeout(resolve, AIResponseLatencyMS);
         });
@@ -63,6 +65,7 @@ function onMainScreenLoaded() {
             } else {
                 turn = 1;
             }
+            isProcessingAI = false;
         });
     };
 
@@ -71,6 +74,9 @@ function onMainScreenLoaded() {
 
     const player2BoardDiv = document.querySelector('.board.player2');
     player2BoardDiv.addEventListener('click', (e) => {
+        if (isProcessingAI) {
+            return;
+        }
         if ([...e.target.classList].includes('cell')) {
             const x = +e.target.dataset.x;
             const y = +e.target.dataset.y;
